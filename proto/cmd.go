@@ -1,5 +1,12 @@
 package proto
 
+const (
+	MaxGroupNameLen = 16
+	MaxStorageIDLen = 16
+
+	MaxIPLen = 16
+)
+
 type Cmd uint8
 
 const (
