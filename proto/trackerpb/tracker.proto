@@ -1,0 +1,56 @@
+syntax = "proto3";
+package trackerpb;
+
+option go_package = "github.com/speedfs/speedfs/proto/trackerpb";
+
+service Tracker {
+  rpc Ping(PingRequest) returns (PingResponse) {}
+  rpc GetGroup(GetGroupRequest) returns (GetGroupResponse) {}
+  rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse) {}
+  rpc DeleteGroup(DeleteGroupRequest) returns (DeleteGroupResponse) {}
+  rpc ListGroupStorages(ListGroupStoragesRequest) returns (ListGroupStoragesResponse) {}
+  rpc GetStorage(GetStorageRequest) returns (GetStorageResponse) {}
+  rpc DeleteStorage(DeleteStorageRequest) returns (DeleteStorageResponse) {}
+}
+
+message PingRequest {
+}
+
+message PingResponse {
+}
+
+message GetGroupRequest {
+}
+
+message GetGroupResponse {
+}
+
+message ListGroupsRequest {
+}
+
+message ListGroupsResponse {
+}
+
+message DeleteGroupRequest {
+}
+
+message DeleteGroupResponse {
+}
+
+message ListGroupStoragesRequest {
+}
+
+message ListGroupStoragesResponse {
+}
+
+message GetStorageRequest {
+}
+
+message GetStorageResponse {
+}
+
+message DeleteStorageRequest {
+}
+
+message DeleteStorageResponse {
+}
