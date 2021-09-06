@@ -1,0 +1,84 @@
+syntax = "proto3";
+package storagepb;
+
+option go_package = "github.com/speedfs/speedfs/proto/storagepb";
+
+service Storage {
+  rpc Ping(PingRequest) returns (PingResponse) {}
+  rpc UploadFile(UploadFileRequest) returns (UploadFileResponse) {}
+  rpc DownloadFile(DownloadFileRequest) returns (DownloadFileResponse) {}
+  rpc GetFileInfo(GetFileInfoRequest) returns (GetFileInfoResponse) {}
+  rpc DeleteFile(DeleteFileRequest) returns (DeleteFileResponse) {}
+  rpc AppendFile(AppendFileRequest) returns (AppendFileResponse) {}
+  rpc ModifyFile(ModifyFileRequest) returns (ModifyFileResponse) {}
+  rpc TruncateFile(TruncateFileRequest) returns (TruncateFileResponse) {}
+  rpc RenameFile(RenameFileRequest) returns (RenameFileResponse) {}
+  rpc SetMetadata(SetMetadataRequest) returns (SetMetadataResponse) {}
+  rpc GetMetadata(GetMetadataRequest) returns (GetMetadataResponse) {}
+}
+
+message PingRequest {
+}
+
+message PingResponse {
+}
+
+message UploadFileRequest {
+}
+
+message UploadFileResponse {
+}
+
+message DeleteFileRequest {
+}
+
+message DeleteFileResponse {
+}
+
+message DownloadFileRequest {
+}
+
+message DownloadFileResponse {
+}
+
+message GetFileInfoRequest {
+}
+
+message GetFileInfoResponse {
+}
+
+message AppendFileRequest {
+}
+
+message AppendFileResponse {
+}
+
+message ModifyFileRequest {
+}
+
+message ModifyFileResponse {
+}
+
+message TruncateFileRequest {
+}
+
+message TruncateFileResponse {
+}
+
+message RenameFileRequest {
+}
+
+message RenameFileResponse {
+}
+
+message SetMetadataRequest {
+}
+
+message SetMetadataResponse {
+}
+
+message GetMetadataRequest {
+}
+
+message GetMetadataResponse {
+}
