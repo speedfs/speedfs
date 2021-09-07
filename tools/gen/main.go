@@ -82,6 +82,10 @@ func main() {
 			for _, field := range structType.Fields.List {
 				switch typ := field.Type.(type) {
 				case *ast.Ident:
+					if len(field.Names) == 0 {
+						break
+					}
+
 					if _, ok := typeMap[typ.Name]; ok {
 						b.WriteString(fmt.Sprintf("\tenc.Encode%s(x.%s)\n", strings.Title(typ.Name), field.Names[0].Name))
 					} else {
