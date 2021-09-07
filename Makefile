@@ -8,3 +8,5 @@ gen:
 	go build -o bin/speedfs-gen tools/gen/*.go
 	bin/speedfs-gen -input proto/storage/storage.go -output proto/storage/storage.proto.go
 	bin/speedfs-gen -input proto/tracker/tracker.go -output proto/tracker/tracker.proto.go
+	bin/speedfs-gen -input proto/cmd.go -output proto/cmd.proto.go
+	bin/speedfs-gen -input proto/header.go -output proto/header.proto.go
