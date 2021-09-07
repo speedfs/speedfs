@@ -50,6 +50,10 @@ func (e *Encoder) EncodeBool(v bool) {
 	}
 }
 
+func (e *Encoder) EncodeByte(v byte) {
+	e.buf.WriteByte(v)
+}
+
 func (e *Encoder) EncodeUint8(v uint8) {
 	e.buf.Write([]byte{byte(v)})
 }
