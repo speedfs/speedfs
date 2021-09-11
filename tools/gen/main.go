@@ -77,42 +77,7 @@ func main() {
 				continue
 			}
 
-			// func EncodeTo
-			b.WriteString("// EncodeTo\n")
-			typeName := typeSpec.Name.Name
-			b.WriteString(fmt.Sprintf("func (x *%s) EncodeTo(enc *rpc.Encoder) {\n", typeName))
-			// cmd
-			if index := bytes.LastIndex([]byte(typeName), []byte("Command")); index > 0 {
-				b.WriteString(fmt.Sprintf("\tx.Cmd = uint8(Cmd%s)\n\n", typeName[0:index]))
-			}
-			if index := bytes.LastIndex([]byte(typeName), []byte("Reply")); index > 0 {
-				b.WriteString("\tx.Cmd = uint8(CmdReply)\n\n")
-			}
-			// fields
-			for _, field := range structType.Fields.List {
-				switch typ := field.Type.(type) {
-				case *ast.Ident:
-					if len(field.Names) == 0 {
-						break
-					}
-
-					if _, ok := typeMap[typ.Name]; ok {
-						b.WriteString(fmt.Sprintf("\tenc.Encode%s(x.%s)\n", strings.Title(typ.Name), field.Names[0].Name))
-					} else {
-						b.WriteString(fmt.Sprintf("\tx.%s.EncodeTo(enc)\n", field.Names[0].Name))
-					}
-				case *ast.ArrayType:
-					identType, ok := typ.Elt.(*ast.Ident)
-					if !ok {
-						break
-					}
-					if identType.Name == "byte" {
-						b.WriteString(fmt.Sprintf("\tenc.EncodeBytes(x.%s[:])\n", field.Names[0].Name))
-					}
-
-				}
-			}
-			b.WriteString("}\n\n")
+			generateEncodeTo(typeSpec, structType, &b)
 		}
 	}
 
@@ -128,4 +93,42 @@ func main() {
 	if _, err := w.Write(buf); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func generateEncodeTo(typeSpec *ast.TypeSpec, structType *ast.StructType, b *strings.Builder) {
+	b.WriteString("// EncodeTo\n")
+	typeName := typeSpec.Name.Name
+	b.WriteString(fmt.Sprintf("func (x *%s) EncodeTo(enc *rpc.Encoder) {\n", typeName))
+	// cmd
+	if index := bytes.LastIndex([]byte(typeName), []byte("Command")); index > 0 {
+		b.WriteString(fmt.Sprintf("\tx.Cmd = uint8(Cmd%s)\n\n", typeName[0:index]))
+	}
+	if index := bytes.LastIndex([]byte(typeName), []byte("Reply")); index > 0 {
+		b.WriteString("\tx.Cmd = uint8(CmdReply)\n\n")
+	}
+	// fields
+	for _, field := range structType.Fields.List {
+		switch typ := field.Type.(type) {
+		case *ast.Ident:
+			if len(field.Names) == 0 {
+				break
+			}
+
+			if _, ok := typeMap[typ.Name]; ok {
+				b.WriteString(fmt.Sprintf("\tenc.Encode%s(x.%s)\n", strings.Title(typ.Name), field.Names[0].Name))
+			} else {
+				b.WriteString(fmt.Sprintf("\tx.%s.EncodeTo(enc)\n", field.Names[0].Name))
+			}
+		case *ast.ArrayType:
+			identType, ok := typ.Elt.(*ast.Ident)
+			if !ok {
+				break
+			}
+			if identType.Name == "byte" {
+				b.WriteString(fmt.Sprintf("\tenc.EncodeBytes(x.%s[:])\n", field.Names[0].Name))
+			}
+
+		}
+	}
+	b.WriteString("}\n\n")
 }
