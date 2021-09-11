@@ -77,6 +77,7 @@ func main() {
 			}
 
 			// func EncodeTo
+			b.WriteString("// EncodeTo\n")
 			b.WriteString(fmt.Sprintf("func (x *%s) EncodeTo(enc *rpc.Encoder) {\n", typeSpec.Name.Name))
 			// fields
 			for _, field := range structType.Fields.List {

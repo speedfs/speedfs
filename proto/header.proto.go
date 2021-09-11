@@ -6,6 +6,7 @@ import (
 	"github.com/speedfs/speedfs/internal/rpc"
 )
 
+// EncodeTo
 func (x *Header) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.BodyLen)
 	enc.EncodeUint8(x.Cmd)

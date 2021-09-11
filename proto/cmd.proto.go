@@ -6,14 +6,18 @@ import (
 	"github.com/speedfs/speedfs/internal/rpc"
 )
 
+// EncodeTo
 func (x *QuitCommand) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *Reply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *PingCommand) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *PingReply) EncodeTo(enc *rpc.Encoder) {
 }

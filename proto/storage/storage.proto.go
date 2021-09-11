@@ -6,13 +6,16 @@ import (
 	"github.com/speedfs/speedfs/internal/rpc"
 )
 
+// EncodeTo
 func (x *ReportStorageIDCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.StorageID[:])
 }
 
+// EncodeTo
 func (x *ReportStorageIDReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *UploadFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint8(x.StorePathIndex)
 	enc.EncodeUint64(x.MetadataLen)
@@ -22,11 +25,13 @@ func (x *UploadFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.Content[:])
 }
 
+// EncodeTo
 func (x *UploadFileReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *UploadAppenderFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint8(x.StorePathIndex)
 	enc.EncodeUint64(x.MetadataLen)
@@ -36,19 +41,23 @@ func (x *UploadAppenderFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.Content[:])
 }
 
+// EncodeTo
 func (x *UploadAppenderFileReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *DeleteFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *DeleteFileReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *SetMetadataCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.MetadataLen)
@@ -58,18 +67,22 @@ func (x *SetMetadataCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Metadata)
 }
 
+// EncodeTo
 func (x *SetMetadataReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *GetMetadataCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *GetMetadataReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Metadata)
 }
 
+// EncodeTo
 func (x *DownloadFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.Offset)
 	enc.EncodeUint64(x.Size)
@@ -77,15 +90,18 @@ func (x *DownloadFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *DownloadFileReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.Content[:])
 }
 
+// EncodeTo
 func (x *GetFileInfoCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *GetFileInfoReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.Size)
 	enc.EncodeUint64(x.CreateTime)
@@ -93,6 +109,7 @@ func (x *GetFileInfoReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.SourceIP[:])
 }
 
+// EncodeTo
 func (x *AppendFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Size)
@@ -100,9 +117,11 @@ func (x *AppendFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.Content[:])
 }
 
+// EncodeTo
 func (x *AppendFileReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *ModifyFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Offset)
@@ -111,22 +130,27 @@ func (x *ModifyFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.Content[:])
 }
 
+// EncodeTo
 func (x *ModifyFileReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *TruncateFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Size)
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *TruncateFileReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *RenameFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *RenameFileReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)

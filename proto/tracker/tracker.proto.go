@@ -6,6 +6,7 @@ import (
 	"github.com/speedfs/speedfs/internal/rpc"
 )
 
+// EncodeTo
 func (x *GroupStat) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeUint64(x.TotalMiB)
@@ -21,124 +22,153 @@ func (x *GroupStat) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.CurrentTrunkFileID)
 }
 
+// EncodeTo
 func (x *GetGroupCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 }
 
+// EncodeTo
 func (x *GetGroupReply) EncodeTo(enc *rpc.Encoder) {
 	x.GroupStat.EncodeTo(enc)
 }
 
+// EncodeTo
 func (x *ListGroupsCommand) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *ListGroupsReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *DeleteGroupCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 }
 
+// EncodeTo
 func (x *DeleteGroupReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *ListGroupStoragesCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 }
 
+// EncodeTo
 func (x *ListGroupStoragesReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *GetStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeBytes(x.StorageID[:])
 }
 
+// EncodeTo
 func (x *GetStorageReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *DeleteStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeBytes(x.StorageID[:])
 }
 
+// EncodeTo
 func (x *DeleteStorageReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *SetTrunkServerCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeBytes(x.StorageID[:])
 }
 
+// EncodeTo
 func (x *SetTrunkServerReply) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *Addr) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.IP[:])
 	enc.EncodeUint64(x.Port)
 }
 
+// EncodeTo
 func (x *QueryStorageCommand) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *QueryStorageReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
+// EncodeTo
 func (x *QueryGroupStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 }
 
+// EncodeTo
 func (x *QueryGroupStorageReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
+// EncodeTo
 func (x *QueryStoragesCommand) EncodeTo(enc *rpc.Encoder) {
 }
 
+// EncodeTo
 func (x *QueryStoragesReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
+// EncodeTo
 func (x *QueryGroupStoragesCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 }
 
+// EncodeTo
 func (x *QueryGroupStoragesReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
+// EncodeTo
 func (x *QueryDownloadableStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *QueryDownloadableStorageReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 }
 
+// EncodeTo
 func (x *QueryDownloadableStoragesCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *QueryDownloadableStoragesReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeUint8(x.Port)
 }
 
+// EncodeTo
 func (x *QueryUpdatableStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
+// EncodeTo
 func (x *QueryUpdatableStorageReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
