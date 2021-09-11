@@ -12,3 +12,21 @@ func (x *Header) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint8(x.Cmd)
 	enc.EncodeInt8(x.Status)
 }
+
+// DecodeFrom
+func (x *Header) DecodeFrom(dec *rpc.Decoder) error {
+
+	var err error
+
+	if x.BodyLen, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.Cmd, err = dec.DecodeUint8(); err != nil {
+		return err
+	}
+	if x.Status, err = dec.DecodeInt8(); err != nil {
+		return err
+	}
+
+	return nil
+}

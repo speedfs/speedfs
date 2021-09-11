@@ -22,11 +22,69 @@ func (x *GroupStat) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.CurrentTrunkFileID)
 }
 
+// DecodeFrom
+func (x *GroupStat) DecodeFrom(dec *rpc.Decoder) error {
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if x.TotalMiB, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.FreeMiB, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.TrunkFreeMiB, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.ServerCount, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.StoragePort, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.StorageHTTPPort, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.ActiveServerCount, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.CurrentWriteServer, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.StorePathCount, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.SubdirCountPerPath, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.CurrentTrunkFileID, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *GetGroupCommand) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdGetGroup)
 
 	enc.EncodeBytes(x.GroupName[:])
+}
+
+// DecodeFrom
+func (x *GetGroupCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdGetGroup)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // EncodeTo
@@ -36,16 +94,43 @@ func (x *GetGroupReply) EncodeTo(enc *rpc.Encoder) {
 	x.GroupStat.EncodeTo(enc)
 }
 
+// DecodeFrom
+func (x *GetGroupReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = x.GroupStat.DecodeFrom(dec); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *ListGroupsCommand) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdListGroups)
 
 }
 
+// DecodeFrom
+func (x *ListGroupsCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdListGroups)
+
+	return nil
+}
+
 // EncodeTo
 func (x *ListGroupsReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *ListGroupsReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -55,10 +140,30 @@ func (x *DeleteGroupCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 }
 
+// DecodeFrom
+func (x *DeleteGroupCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdDeleteGroup)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *DeleteGroupReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *DeleteGroupReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -68,10 +173,30 @@ func (x *ListGroupStoragesCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 }
 
+// DecodeFrom
+func (x *ListGroupStoragesCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdListGroupStorages)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *ListGroupStoragesReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *ListGroupStoragesReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -82,10 +207,33 @@ func (x *GetStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.StorageID[:])
 }
 
+// DecodeFrom
+func (x *GetStorageCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdGetStorage)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if err = dec.DecodeBytes(x.StorageID[:]); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *GetStorageReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *GetStorageReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -96,10 +244,33 @@ func (x *DeleteStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.StorageID[:])
 }
 
+// DecodeFrom
+func (x *DeleteStorageCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdDeleteStorage)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if err = dec.DecodeBytes(x.StorageID[:]); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *DeleteStorageReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *DeleteStorageReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -110,10 +281,33 @@ func (x *SetTrunkServerCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.StorageID[:])
 }
 
+// DecodeFrom
+func (x *SetTrunkServerCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdSetTrunkServer)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if err = dec.DecodeBytes(x.StorageID[:]); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *SetTrunkServerReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *SetTrunkServerReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -122,10 +316,32 @@ func (x *Addr) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.Port)
 }
 
+// DecodeFrom
+func (x *Addr) DecodeFrom(dec *rpc.Decoder) error {
+
+	var err error
+
+	if err = dec.DecodeBytes(x.IP[:]); err != nil {
+		return err
+	}
+	if x.Port, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *QueryStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdQueryStorage)
 
+}
+
+// DecodeFrom
+func (x *QueryStorageCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdQueryStorage)
+
+	return nil
 }
 
 // EncodeTo
@@ -137,11 +353,43 @@ func (x *QueryStorageReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
+// DecodeFrom
+func (x *QueryStorageReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if err = x.Addr.DecodeFrom(dec); err != nil {
+		return err
+	}
+	if x.StorePathIndex, err = dec.DecodeUint8(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *QueryGroupStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdQueryGroupStorage)
 
 	enc.EncodeBytes(x.GroupName[:])
+}
+
+// DecodeFrom
+func (x *QueryGroupStorageCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdQueryGroupStorage)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // EncodeTo
@@ -153,10 +401,36 @@ func (x *QueryGroupStorageReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
+// DecodeFrom
+func (x *QueryGroupStorageReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if err = x.Addr.DecodeFrom(dec); err != nil {
+		return err
+	}
+	if x.StorePathIndex, err = dec.DecodeUint8(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *QueryStoragesCommand) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdQueryStorages)
 
+}
+
+// DecodeFrom
+func (x *QueryStoragesCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdQueryStorages)
+
+	return nil
 }
 
 // EncodeTo
@@ -167,11 +441,40 @@ func (x *QueryStoragesReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
+// DecodeFrom
+func (x *QueryStoragesReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if x.StorePathIndex, err = dec.DecodeUint8(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *QueryGroupStoragesCommand) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdQueryGroupStorages)
 
 	enc.EncodeBytes(x.GroupName[:])
+}
+
+// DecodeFrom
+func (x *QueryGroupStoragesCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdQueryGroupStorages)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // EncodeTo
@@ -182,12 +485,42 @@ func (x *QueryGroupStoragesReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
+// DecodeFrom
+func (x *QueryGroupStoragesReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if x.StorePathIndex, err = dec.DecodeUint8(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *QueryDownloadableStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdQueryDownloadableStorage)
 
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
+}
+
+// DecodeFrom
+func (x *QueryDownloadableStorageCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdQueryDownloadableStorage)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	x.Filename = string(dec.Bytes())
+
+	return nil
 }
 
 // EncodeTo
@@ -198,12 +531,42 @@ func (x *QueryDownloadableStorageReply) EncodeTo(enc *rpc.Encoder) {
 	x.Addr.EncodeTo(enc)
 }
 
+// DecodeFrom
+func (x *QueryDownloadableStorageReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if err = x.Addr.DecodeFrom(dec); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *QueryDownloadableStoragesCommand) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdQueryDownloadableStorages)
 
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
+}
+
+// DecodeFrom
+func (x *QueryDownloadableStoragesCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdQueryDownloadableStorages)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	x.Filename = string(dec.Bytes())
+
+	return nil
 }
 
 // EncodeTo
@@ -214,6 +577,22 @@ func (x *QueryDownloadableStoragesReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint8(x.Port)
 }
 
+// DecodeFrom
+func (x *QueryDownloadableStoragesReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if x.Port, err = dec.DecodeUint8(); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *QueryUpdatableStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdQueryUpdatableStorage)
@@ -222,10 +601,40 @@ func (x *QueryUpdatableStorageCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Filename)
 }
 
+// DecodeFrom
+func (x *QueryUpdatableStorageCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdQueryUpdatableStorage)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	x.Filename = string(dec.Bytes())
+
+	return nil
+}
+
 // EncodeTo
 func (x *QueryUpdatableStorageReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
+}
+
+// DecodeFrom
+func (x *QueryUpdatableStorageReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	if err = x.Addr.DecodeFrom(dec); err != nil {
+		return err
+	}
+
+	return nil
 }

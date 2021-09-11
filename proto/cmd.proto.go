@@ -12,8 +12,21 @@ func (x *QuitCommand) EncodeTo(enc *rpc.Encoder) {
 
 }
 
+// DecodeFrom
+func (x *QuitCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdQuit)
+
+	return nil
+}
+
 // EncodeTo
 func (x *Reply) EncodeTo(enc *rpc.Encoder) {
+}
+
+// DecodeFrom
+func (x *Reply) DecodeFrom(dec *rpc.Decoder) error {
+
+	return nil
 }
 
 // EncodeTo
@@ -22,8 +35,22 @@ func (x *PingCommand) EncodeTo(enc *rpc.Encoder) {
 
 }
 
+// DecodeFrom
+func (x *PingCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdPing)
+
+	return nil
+}
+
 // EncodeTo
 func (x *PingReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *PingReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }

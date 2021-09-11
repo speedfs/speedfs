@@ -13,10 +13,30 @@ func (x *ReportStorageIDCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.StorageID[:])
 }
 
+// DecodeFrom
+func (x *ReportStorageIDCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReportStorageID)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.StorageID[:]); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *ReportStorageIDReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *ReportStorageIDReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -31,12 +51,56 @@ func (x *UploadFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.Content[:])
 }
 
+// DecodeFrom
+func (x *UploadFileCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdUploadFile)
+
+	var err error
+
+	if x.StorePathIndex, err = dec.DecodeUint8(); err != nil {
+		return err
+	}
+	if x.MetadataLen, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.Size, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if err = dec.DecodeBytes(x.Ext[:]); err != nil {
+		return err
+	}
+	x.Metadata = make([]byte, x.MetadataLen)
+	if err = dec.DecodeBytes(x.Metadata); err != nil {
+		return err
+	}
+	x.Content = make([]byte, x.Size)
+	if err = dec.DecodeBytes(x.Content); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *UploadFileReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
+}
+
+// DecodeFrom
+func (x *UploadFileReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	x.Filename = string(dec.Bytes())
+
+	return nil
 }
 
 // EncodeTo
@@ -51,12 +115,56 @@ func (x *UploadAppenderFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.Content[:])
 }
 
+// DecodeFrom
+func (x *UploadAppenderFileCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdUploadAppenderFile)
+
+	var err error
+
+	if x.StorePathIndex, err = dec.DecodeUint8(); err != nil {
+		return err
+	}
+	if x.MetadataLen, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.Size, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if err = dec.DecodeBytes(x.Ext[:]); err != nil {
+		return err
+	}
+	x.Metadata = make([]byte, x.MetadataLen)
+	if err = dec.DecodeBytes(x.Metadata); err != nil {
+		return err
+	}
+	x.Content = make([]byte, x.Size)
+	if err = dec.DecodeBytes(x.Content); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *UploadAppenderFileReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
+}
+
+// DecodeFrom
+func (x *UploadAppenderFileReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	x.Filename = string(dec.Bytes())
+
+	return nil
 }
 
 // EncodeTo
@@ -67,10 +175,31 @@ func (x *DeleteFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Filename)
 }
 
+// DecodeFrom
+func (x *DeleteFileCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdDeleteFile)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	x.Filename = string(dec.Bytes())
+
+	return nil
+}
+
 // EncodeTo
 func (x *DeleteFileReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *DeleteFileReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -85,10 +214,53 @@ func (x *SetMetadataCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Metadata)
 }
 
+// DecodeFrom
+func (x *SetMetadataCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdSetMetadata)
+
+	var err error
+
+	if x.FilenameLen, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.MetadataLen, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.Flag, err = dec.DecodeByte(); err != nil {
+		return err
+	}
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	{
+		buf := make([]byte, x.FilenameLen)
+		if err = dec.DecodeBytes(buf); err != nil {
+			return err
+		}
+		x.Filename = string(buf)
+	}
+	{
+		buf := make([]byte, x.MetadataLen)
+		if err = dec.DecodeBytes(buf); err != nil {
+			return err
+		}
+		x.Metadata = string(buf)
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *SetMetadataReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *SetMetadataReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -99,11 +271,34 @@ func (x *GetMetadataCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Filename)
 }
 
+// DecodeFrom
+func (x *GetMetadataCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdGetMetadata)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	x.Filename = string(dec.Bytes())
+
+	return nil
+}
+
 // EncodeTo
 func (x *GetMetadataReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
 	enc.EncodeString(x.Metadata)
+}
+
+// DecodeFrom
+func (x *GetMetadataReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	x.Metadata = string(dec.Bytes())
+
+	return nil
 }
 
 // EncodeTo
@@ -116,11 +311,40 @@ func (x *DownloadFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Filename)
 }
 
+// DecodeFrom
+func (x *DownloadFileCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdDownloadFile)
+
+	var err error
+
+	if x.Offset, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.Size, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	x.Filename = string(dec.Bytes())
+
+	return nil
+}
+
 // EncodeTo
 func (x *DownloadFileReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
 	enc.EncodeBytes(x.Content[:])
+}
+
+// DecodeFrom
+func (x *DownloadFileReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	x.Content = dec.Bytes()
+
+	return nil
 }
 
 // EncodeTo
@@ -129,6 +353,20 @@ func (x *GetFileInfoCommand) EncodeTo(enc *rpc.Encoder) {
 
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
+}
+
+// DecodeFrom
+func (x *GetFileInfoCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdGetFileInfo)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	x.Filename = string(dec.Bytes())
+
+	return nil
 }
 
 // EncodeTo
@@ -141,6 +379,28 @@ func (x *GetFileInfoReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.SourceIP[:])
 }
 
+// DecodeFrom
+func (x *GetFileInfoReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if x.Size, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.CreateTime, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.CRC32, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if err = dec.DecodeBytes(x.SourceIP[:]); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *AppendFileCommand) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdAppendFile)
@@ -151,10 +411,44 @@ func (x *AppendFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.Content[:])
 }
 
+// DecodeFrom
+func (x *AppendFileCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdAppendFile)
+
+	var err error
+
+	if x.FilenameLen, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.Size, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	{
+		buf := make([]byte, x.FilenameLen)
+		if err = dec.DecodeBytes(buf); err != nil {
+			return err
+		}
+		x.Filename = string(buf)
+	}
+	x.Content = make([]byte, x.Size)
+	if err = dec.DecodeBytes(x.Content); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *AppendFileReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *AppendFileReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -168,10 +462,47 @@ func (x *ModifyFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.Content[:])
 }
 
+// DecodeFrom
+func (x *ModifyFileCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdModifyFile)
+
+	var err error
+
+	if x.FilenameLen, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.Offset, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.Size, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	{
+		buf := make([]byte, x.FilenameLen)
+		if err = dec.DecodeBytes(buf); err != nil {
+			return err
+		}
+		x.Filename = string(buf)
+	}
+	x.Content = make([]byte, x.Size)
+	if err = dec.DecodeBytes(x.Content); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *ModifyFileReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *ModifyFileReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -183,10 +514,40 @@ func (x *TruncateFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Filename)
 }
 
+// DecodeFrom
+func (x *TruncateFileCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdTruncateFile)
+
+	var err error
+
+	if x.FilenameLen, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	if x.Size, err = dec.DecodeUint64(); err != nil {
+		return err
+	}
+	{
+		buf := make([]byte, x.FilenameLen)
+		if err = dec.DecodeBytes(buf); err != nil {
+			return err
+		}
+		x.Filename = string(buf)
+	}
+
+	return nil
+}
+
 // EncodeTo
 func (x *TruncateFileReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
+}
+
+// DecodeFrom
+func (x *TruncateFileReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	return nil
 }
 
 // EncodeTo
@@ -196,10 +557,33 @@ func (x *RenameFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Filename)
 }
 
+// DecodeFrom
+func (x *RenameFileCommand) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdRenameFile)
+
+	x.Filename = string(dec.Bytes())
+
+	return nil
+}
+
 // EncodeTo
 func (x *RenameFileReply) EncodeTo(enc *rpc.Encoder) {
 	x.Cmd = uint8(CmdReply)
 
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
+}
+
+// DecodeFrom
+func (x *RenameFileReply) DecodeFrom(dec *rpc.Decoder) error {
+	x.Cmd = uint8(CmdReply)
+
+	var err error
+
+	if err = dec.DecodeBytes(x.GroupName[:]); err != nil {
+		return err
+	}
+	x.Filename = string(dec.Bytes())
+
+	return nil
 }

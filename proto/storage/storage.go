@@ -46,8 +46,8 @@ type UploadFileCommand struct {
 	MetadataLen    uint64
 	Size           uint64
 	Ext            [MaxFileExtLen]byte
-	Metadata       []byte
-	Content        []byte
+	Metadata       []byte `proto:"len:MetadataLen"`
+	Content        []byte `proto:"len:Size"`
 }
 
 // UploadFileReply
@@ -64,8 +64,8 @@ type UploadAppenderFileCommand struct {
 	MetadataLen    uint64
 	Size           uint64
 	Ext            [MaxFileExtLen]byte
-	Metadata       []byte
-	Content        []byte
+	Metadata       []byte `proto:"len:MetadataLen"`
+	Content        []byte `proto:"len:Size"`
 }
 
 // UploadAppenderFileReply
@@ -94,8 +94,8 @@ type SetMetadataCommand struct {
 	MetadataLen uint64
 	Flag        byte
 	GroupName   [proto.MaxGroupNameLen]byte
-	Filename    string
-	Metadata    string
+	Filename    string `proto:"len:FilenameLen"`
+	Metadata    string `proto:"len:MetadataLen"`
 }
 
 // SetMetadataReply
@@ -152,8 +152,8 @@ type AppendFileCommand struct {
 	proto.Header
 	FilenameLen uint64
 	Size        uint64
-	Filename    string
-	Content     []byte
+	Filename    string `proto:"len:FilenameLen"`
+	Content     []byte `proto:"len:Size"`
 }
 
 // AppendFileReply
@@ -167,8 +167,8 @@ type ModifyFileCommand struct {
 	FilenameLen uint64
 	Offset      uint64
 	Size        uint64
-	Filename    string
-	Content     []byte
+	Filename    string `proto:"len:FilenameLen"`
+	Content     []byte `proto:"len:Size"`
 }
 
 // ModifyFileReply
@@ -181,7 +181,7 @@ type TruncateFileCommand struct {
 	proto.Header
 	FilenameLen uint64
 	Size        uint64
-	Filename    string
+	Filename    string `proto:"len:FilenameLen"`
 }
 
 // TruncateFileReply

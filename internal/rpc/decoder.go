@@ -23,6 +23,14 @@ func NewDecoderOrder(buf []byte, order binary.ByteOrder) *Decoder {
 	return d
 }
 
+func (d *Decoder) Bytes() []byte {
+	return d.buf.Bytes()
+}
+
+func (d *Decoder) String() string {
+	return d.buf.String()
+}
+
 func (d *Decoder) Reset() {
 	d.buf.Reset()
 }
@@ -45,6 +53,14 @@ func (d *Decoder) DecodeBool() (bool, error) {
 		return false, err
 	}
 	return u != 0, nil
+}
+
+func (d *Decoder) DecodeByte() (byte, error) {
+	var buf [1]byte
+	if err := d.DecodeBytes(buf[:]); err != nil {
+		return 0, err
+	}
+	return buf[0], nil
 }
 
 func (d *Decoder) DecodeUint8() (uint8, error) {

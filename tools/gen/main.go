@@ -11,6 +11,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"reflect"
 	"strings"
 )
 
@@ -77,12 +78,15 @@ func main() {
 				continue
 			}
 
+			// ast.Print(fset, spec)
 			generateEncodeTo(typeSpec, structType, &b)
+			generateDecodeFrom(typeSpec, structType, &b)
 		}
 	}
 
 	buf, err := format.Source([]byte(b.String()))
 	if err != nil {
+		fmt.Println(b.String())
 		log.Fatal(err)
 	}
 
@@ -127,8 +131,109 @@ func generateEncodeTo(typeSpec *ast.TypeSpec, structType *ast.StructType, b *str
 			if identType.Name == "byte" {
 				b.WriteString(fmt.Sprintf("\tenc.EncodeBytes(x.%s[:])\n", field.Names[0].Name))
 			}
-
 		}
 	}
 	b.WriteString("}\n\n")
+}
+
+func generateDecodeFrom(typeSpec *ast.TypeSpec, structType *ast.StructType, b *strings.Builder) {
+	b.WriteString("// DecodeFrom\n")
+	typeName := typeSpec.Name.Name
+	b.WriteString(fmt.Sprintf("func (x *%s) DecodeFrom(dec *rpc.Decoder) error {\n", typeName))
+	// cmd
+	if index := bytes.LastIndex([]byte(typeName), []byte("Command")); index > 0 {
+		b.WriteString(fmt.Sprintf("\tx.Cmd = uint8(Cmd%s)\n\n", typeName[0:index]))
+	}
+	if index := bytes.LastIndex([]byte(typeName), []byte("Reply")); index > 0 {
+		b.WriteString("\tx.Cmd = uint8(CmdReply)\n")
+	}
+	hasErrDecl := false
+	// fields
+	for _, field := range structType.Fields.List {
+		switch typ := field.Type.(type) {
+		case *ast.Ident:
+			if len(field.Names) == 0 {
+				break
+			}
+
+			if _, ok := typeMap[typ.Name]; ok {
+				if typ.Name != "string" {
+					if !hasErrDecl {
+						b.WriteString("\t\nvar err error\n")
+						hasErrDecl = true
+					}
+					b.WriteString(fmt.Sprintf(`
+	if x.%s, err = dec.Decode%s(); err != nil {
+		return err
+	}`, field.Names[0].Name, strings.Title(typ.Name)))
+				} else {
+					if field.Tag != nil {
+						tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
+						protoVal := strings.Split(tag.Get("proto"), ":")
+						if len(protoVal) == 2 && protoVal[0] == "len" {
+							if !hasErrDecl {
+								b.WriteString("\t\nvar err error\n")
+								hasErrDecl = true
+							}
+							b.WriteString(fmt.Sprintf(`
+	{
+		buf := make([]byte, x.%s)
+		if err = dec.DecodeBytes(buf); err != nil {
+			return err
+		}
+		x.%s = string(buf)
+	}`, protoVal[1], field.Names[0].Name))
+						}
+					} else {
+						b.WriteString(fmt.Sprintf("\n\tx.%s = string(dec.Bytes())\n", field.Names[0].Name))
+					}
+				}
+			} else {
+				if !hasErrDecl {
+					b.WriteString("\t\nvar err error\n")
+					hasErrDecl = true
+				}
+				b.WriteString(fmt.Sprintf(`
+	if err = x.%s.DecodeFrom(dec); err != nil {
+		return err
+	}`, field.Names[0].Name))
+			}
+		case *ast.ArrayType:
+			identType, ok := typ.Elt.(*ast.Ident)
+			if !ok {
+				break
+			}
+			if identType.Name == "byte" {
+				if typ.Len != nil {
+					if !hasErrDecl {
+						b.WriteString("\n\tvar err error\n")
+						hasErrDecl = true
+					}
+					b.WriteString(fmt.Sprintf(`
+	if err = dec.DecodeBytes(x.%s[:]); err != nil {
+		return err
+	}`, field.Names[0].Name))
+				} else {
+					if field.Tag == nil {
+						b.WriteString(fmt.Sprintf("\n\tx.%s = dec.Bytes()\n", field.Names[0].Name))
+					} else {
+						tag := reflect.StructTag(strings.Trim(field.Tag.Value, "`"))
+						protoVal := strings.Split(tag.Get("proto"), ":")
+						if len(protoVal) == 2 && protoVal[0] == "len" {
+							if !hasErrDecl {
+								b.WriteString("\n\tvar err error\n")
+								hasErrDecl = true
+							}
+							b.WriteString(fmt.Sprintf(`
+	x.%s = make([]byte, x.%s)
+	if err = dec.DecodeBytes(x.%s); err != nil {
+		return err
+	}`, field.Names[0].Name, protoVal[1], field.Names[0].Name))
+						}
+					}
+				}
+			}
+		}
+	}
+	b.WriteString("\n\n\treturn nil\n}\n")
 }
