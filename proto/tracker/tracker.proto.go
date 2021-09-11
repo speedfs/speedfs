@@ -24,68 +24,96 @@ func (x *GroupStat) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *GetGroupCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdGetGroup)
+
 	enc.EncodeBytes(x.GroupName[:])
 }
 
 // EncodeTo
 func (x *GetGroupReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	x.GroupStat.EncodeTo(enc)
 }
 
 // EncodeTo
 func (x *ListGroupsCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdListGroups)
+
 }
 
 // EncodeTo
 func (x *ListGroupsReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *DeleteGroupCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdDeleteGroup)
+
 	enc.EncodeBytes(x.GroupName[:])
 }
 
 // EncodeTo
 func (x *DeleteGroupReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *ListGroupStoragesCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdListGroupStorages)
+
 	enc.EncodeBytes(x.GroupName[:])
 }
 
 // EncodeTo
 func (x *ListGroupStoragesReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *GetStorageCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdGetStorage)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeBytes(x.StorageID[:])
 }
 
 // EncodeTo
 func (x *GetStorageReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *DeleteStorageCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdDeleteStorage)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeBytes(x.StorageID[:])
 }
 
 // EncodeTo
 func (x *DeleteStorageReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *SetTrunkServerCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdSetTrunkServer)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeBytes(x.StorageID[:])
 }
 
 // EncodeTo
 func (x *SetTrunkServerReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
@@ -96,10 +124,14 @@ func (x *Addr) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *QueryStorageCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdQueryStorage)
+
 }
 
 // EncodeTo
 func (x *QueryStorageReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 	enc.EncodeUint8(x.StorePathIndex)
@@ -107,11 +139,15 @@ func (x *QueryStorageReply) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *QueryGroupStorageCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdQueryGroupStorage)
+
 	enc.EncodeBytes(x.GroupName[:])
 }
 
 // EncodeTo
 func (x *QueryGroupStorageReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 	enc.EncodeUint8(x.StorePathIndex)
@@ -119,57 +155,77 @@ func (x *QueryGroupStorageReply) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *QueryStoragesCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdQueryStorages)
+
 }
 
 // EncodeTo
 func (x *QueryStoragesReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
 // EncodeTo
 func (x *QueryGroupStoragesCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdQueryGroupStorages)
+
 	enc.EncodeBytes(x.GroupName[:])
 }
 
 // EncodeTo
 func (x *QueryGroupStoragesReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
 // EncodeTo
 func (x *QueryDownloadableStorageCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdQueryDownloadableStorage)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // EncodeTo
 func (x *QueryDownloadableStorageReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 }
 
 // EncodeTo
 func (x *QueryDownloadableStoragesCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdQueryDownloadableStorages)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // EncodeTo
 func (x *QueryDownloadableStoragesReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeUint8(x.Port)
 }
 
 // EncodeTo
 func (x *QueryUpdatableStorageCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdQueryUpdatableStorage)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // EncodeTo
 func (x *QueryUpdatableStorageReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 }

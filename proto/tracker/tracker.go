@@ -5,6 +5,11 @@ import (
 )
 
 const (
+	CmdReply proto.Cmd = 100
+
+	CmdQuit proto.Cmd = 82
+	CmdPing proto.Cmd = 111
+
 	CmdTrackerSaveSysFilesBegin proto.Cmd = 61
 	CmdTrackerSaveSysFilesEnd   proto.Cmd = 62
 	CmdTrackerGetSysFile        proto.Cmd = 63

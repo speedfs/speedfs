@@ -8,15 +8,21 @@ import (
 
 // EncodeTo
 func (x *ReportStorageIDCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReportStorageID)
+
 	enc.EncodeBytes(x.StorageID[:])
 }
 
 // EncodeTo
 func (x *ReportStorageIDReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *UploadFileCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdUploadFile)
+
 	enc.EncodeUint8(x.StorePathIndex)
 	enc.EncodeUint64(x.MetadataLen)
 	enc.EncodeUint64(x.Size)
@@ -27,12 +33,16 @@ func (x *UploadFileCommand) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *UploadFileReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // EncodeTo
 func (x *UploadAppenderFileCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdUploadAppenderFile)
+
 	enc.EncodeUint8(x.StorePathIndex)
 	enc.EncodeUint64(x.MetadataLen)
 	enc.EncodeUint64(x.Size)
@@ -43,22 +53,30 @@ func (x *UploadAppenderFileCommand) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *UploadAppenderFileReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // EncodeTo
 func (x *DeleteFileCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdDeleteFile)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // EncodeTo
 func (x *DeleteFileReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *SetMetadataCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdSetMetadata)
+
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.MetadataLen)
 	enc.EncodeByte(x.Flag)
@@ -69,21 +87,29 @@ func (x *SetMetadataCommand) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *SetMetadataReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *GetMetadataCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdGetMetadata)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // EncodeTo
 func (x *GetMetadataReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeString(x.Metadata)
 }
 
 // EncodeTo
 func (x *DownloadFileCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdDownloadFile)
+
 	enc.EncodeUint64(x.Offset)
 	enc.EncodeUint64(x.Size)
 	enc.EncodeBytes(x.GroupName[:])
@@ -92,17 +118,23 @@ func (x *DownloadFileCommand) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *DownloadFileReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.Content[:])
 }
 
 // EncodeTo
 func (x *GetFileInfoCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdGetFileInfo)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // EncodeTo
 func (x *GetFileInfoReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeUint64(x.Size)
 	enc.EncodeUint64(x.CreateTime)
 	enc.EncodeUint64(x.CRC32)
@@ -111,6 +143,8 @@ func (x *GetFileInfoReply) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *AppendFileCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdAppendFile)
+
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Size)
 	enc.EncodeString(x.Filename)
@@ -119,10 +153,14 @@ func (x *AppendFileCommand) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *AppendFileReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *ModifyFileCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdModifyFile)
+
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Offset)
 	enc.EncodeUint64(x.Size)
@@ -132,10 +170,14 @@ func (x *ModifyFileCommand) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *ModifyFileReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *TruncateFileCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdTruncateFile)
+
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Size)
 	enc.EncodeString(x.Filename)
@@ -143,15 +185,21 @@ func (x *TruncateFileCommand) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *TruncateFileReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }
 
 // EncodeTo
 func (x *RenameFileCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdRenameFile)
+
 	enc.EncodeString(x.Filename)
 }
 
 // EncodeTo
 func (x *RenameFileReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }

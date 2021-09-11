@@ -8,6 +8,8 @@ import (
 
 // EncodeTo
 func (x *QuitCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdQuit)
+
 }
 
 // EncodeTo
@@ -16,8 +18,12 @@ func (x *Reply) EncodeTo(enc *rpc.Encoder) {
 
 // EncodeTo
 func (x *PingCommand) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdPing)
+
 }
 
 // EncodeTo
 func (x *PingReply) EncodeTo(enc *rpc.Encoder) {
+	x.Cmd = uint8(CmdReply)
+
 }

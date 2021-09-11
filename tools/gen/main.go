@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
 	"go/ast"
@@ -78,7 +79,15 @@ func main() {
 
 			// func EncodeTo
 			b.WriteString("// EncodeTo\n")
-			b.WriteString(fmt.Sprintf("func (x *%s) EncodeTo(enc *rpc.Encoder) {\n", typeSpec.Name.Name))
+			typeName := typeSpec.Name.Name
+			b.WriteString(fmt.Sprintf("func (x *%s) EncodeTo(enc *rpc.Encoder) {\n", typeName))
+			// cmd
+			if index := bytes.LastIndex([]byte(typeName), []byte("Command")); index > 0 {
+				b.WriteString(fmt.Sprintf("\tx.Cmd = uint8(Cmd%s)\n\n", typeName[0:index]))
+			}
+			if index := bytes.LastIndex([]byte(typeName), []byte("Reply")); index > 0 {
+				b.WriteString("\tx.Cmd = uint8(CmdReply)\n\n")
+			}
 			// fields
 			for _, field := range structType.Fields.List {
 				switch typ := field.Type.(type) {

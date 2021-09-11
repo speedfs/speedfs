@@ -9,6 +9,11 @@ const (
 )
 
 const (
+	CmdReply proto.Cmd = 100
+
+	CmdQuit proto.Cmd = 82
+	CmdPing proto.Cmd = 111
+
 	CmdReportStorageID    proto.Cmd = 9
 	CmdUploadFile         proto.Cmd = 11
 	CmdUploadAppenderFile proto.Cmd = 21
