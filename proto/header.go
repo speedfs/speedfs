@@ -1,7 +1,7 @@
 package proto
 
 type Header struct {
-	BodyLen uint8
+	BodyLen uint64
 	Cmd     uint8
 	Status  int8
 }

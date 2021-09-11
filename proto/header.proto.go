@@ -7,7 +7,7 @@ import (
 )
 
 func (x *Header) EncodeTo(enc *rpc.Encoder) {
-	enc.EncodeUint8(x.BodyLen)
+	enc.EncodeUint64(x.BodyLen)
 	enc.EncodeUint8(x.Cmd)
 	enc.EncodeInt8(x.Status)
 }
