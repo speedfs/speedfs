@@ -1,6 +1,8 @@
 package tracker
 
 import (
+	"context"
+
 	"github.com/speedfs/speedfs/proto"
 )
 
@@ -57,6 +59,10 @@ const (
 	// update
 	CmdQueryUpdatableStorage proto.Cmd = 103 // group name, file name
 )
+
+type TrackerService interface {
+	QueryStorage(ctx context.Context, cmd *QueryStorageCommand) (*QueryStorageReply, error)
+}
 
 // GroupStat
 type GroupStat struct {

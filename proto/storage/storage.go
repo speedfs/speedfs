@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"context"
+
 	"github.com/speedfs/speedfs/proto"
 )
 
@@ -27,6 +29,18 @@ const (
 	CmdTruncateFile       proto.Cmd = 36
 	CmdRenameFile         proto.Cmd = 38
 )
+
+type StorageService interface {
+	UploadFile(ctx context.Context, cmd *UploadFileCommand) (*UploadFileReply, error)
+	UploadAppenderFile(ctx context.Context, cmd *UploadAppenderFileCommand) (*UploadAppenderFileReply, error)
+	SetMetadata(ctx context.Context, cmd *SetMetadataCommand) (*SetMetadataReply, error)
+	GetMetadata(ctx context.Context, cmd *GetMetadataCommand) (*GetMetadataReply, error)
+	DownloadFile(ctx context.Context, cmd *DownloadFileCommand) (*DownloadFileReply, error)
+	AppendFile(ctx context.Context, cmd *AppendFileCommand) (*AppendFileReply, error)
+	ModifyFile(ctx context.Context, cmd *ModifyFileCommand) (*ModifyFileReply, error)
+	TruncateFile(ctx context.Context, cmd *TruncateFileCommand) (*TruncateFileReply, error)
+	RenameFile(ctx context.Context, cmd *RenameFileCommand) (*RenameFileReply, error)
+}
 
 // ReportIDCommand
 type ReportStorageIDCommand struct {
