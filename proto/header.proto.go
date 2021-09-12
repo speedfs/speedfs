@@ -2,19 +2,15 @@
 
 package proto
 
-import (
-	"github.com/speedfs/speedfs/internal/rpc"
-)
-
 // EncodeTo
-func (x *Header) EncodeTo(enc *rpc.Encoder) {
+func (x *Header) EncodeTo(enc *Encoder) {
 	enc.EncodeUint64(x.BodyLen)
 	enc.EncodeUint8(x.Cmd)
 	enc.EncodeInt8(x.Status)
 }
 
 // DecodeFrom
-func (x *Header) DecodeFrom(dec *rpc.Decoder) error {
+func (x *Header) DecodeFrom(dec *Decoder) error {
 
 	var err error
 
