@@ -1,6 +1,8 @@
 package storage
 
 import (
+	"context"
+
 	"github.com/speedfs/speedfs/proto"
 )
 
@@ -9,6 +11,11 @@ const (
 )
 
 const (
+	CmdReply proto.Cmd = 100
+
+	CmdQuit proto.Cmd = 82
+	CmdPing proto.Cmd = 111
+
 	CmdReportStorageID    proto.Cmd = 9
 	CmdUploadFile         proto.Cmd = 11
 	CmdUploadAppenderFile proto.Cmd = 21
@@ -22,6 +29,18 @@ const (
 	CmdTruncateFile       proto.Cmd = 36
 	CmdRenameFile         proto.Cmd = 38
 )
+
+type StorageService interface {
+	UploadFile(ctx context.Context, cmd *UploadFileCommand) (*UploadFileReply, error)
+	UploadAppenderFile(ctx context.Context, cmd *UploadAppenderFileCommand) (*UploadAppenderFileReply, error)
+	SetMetadata(ctx context.Context, cmd *SetMetadataCommand) (*SetMetadataReply, error)
+	GetMetadata(ctx context.Context, cmd *GetMetadataCommand) (*GetMetadataReply, error)
+	DownloadFile(ctx context.Context, cmd *DownloadFileCommand) (*DownloadFileReply, error)
+	AppendFile(ctx context.Context, cmd *AppendFileCommand) (*AppendFileReply, error)
+	ModifyFile(ctx context.Context, cmd *ModifyFileCommand) (*ModifyFileReply, error)
+	TruncateFile(ctx context.Context, cmd *TruncateFileCommand) (*TruncateFileReply, error)
+	RenameFile(ctx context.Context, cmd *RenameFileCommand) (*RenameFileReply, error)
+}
 
 // ReportIDCommand
 type ReportStorageIDCommand struct {
@@ -41,8 +60,8 @@ type UploadFileCommand struct {
 	MetadataLen    uint64
 	Size           uint64
 	Ext            [MaxFileExtLen]byte
-	Metadata       []byte
-	Content        []byte
+	Metadata       []byte `proto:"len:MetadataLen"`
+	Content        []byte `proto:"len:Size"`
 }
 
 // UploadFileReply
@@ -59,8 +78,8 @@ type UploadAppenderFileCommand struct {
 	MetadataLen    uint64
 	Size           uint64
 	Ext            [MaxFileExtLen]byte
-	Metadata       []byte
-	Content        []byte
+	Metadata       []byte `proto:"len:MetadataLen"`
+	Content        []byte `proto:"len:Size"`
 }
 
 // UploadAppenderFileReply
@@ -89,8 +108,8 @@ type SetMetadataCommand struct {
 	MetadataLen uint64
 	Flag        byte
 	GroupName   [proto.MaxGroupNameLen]byte
-	Filename    string
-	Metadata    string
+	Filename    string `proto:"len:FilenameLen"`
+	Metadata    string `proto:"len:MetadataLen"`
 }
 
 // SetMetadataReply
@@ -147,8 +166,8 @@ type AppendFileCommand struct {
 	proto.Header
 	FilenameLen uint64
 	Size        uint64
-	Filename    string
-	Content     []byte
+	Filename    string `proto:"len:FilenameLen"`
+	Content     []byte `proto:"len:Size"`
 }
 
 // AppendFileReply
@@ -162,8 +181,8 @@ type ModifyFileCommand struct {
 	FilenameLen uint64
 	Offset      uint64
 	Size        uint64
-	Filename    string
-	Content     []byte
+	Filename    string `proto:"len:FilenameLen"`
+	Content     []byte `proto:"len:Size"`
 }
 
 // ModifyFileReply
@@ -176,7 +195,7 @@ type TruncateFileCommand struct {
 	proto.Header
 	FilenameLen uint64
 	Size        uint64
-	Filename    string
+	Filename    string `proto:"len:FilenameLen"`
 }
 
 // TruncateFileReply
