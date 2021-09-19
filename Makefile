@@ -13,13 +13,18 @@ gen:
 	bin/speedfs-gen -input proto/cmd.go
 	bin/speedfs-gen -input proto/header.go
 
-build: pkg
+build: pkg cmd
 
 pkg:
 	go build github.com/speedfs/speedfs/proto
 	go build github.com/speedfs/speedfs/proto/storage
 	go build github.com/speedfs/speedfs/proto/tracker
 	go build github.com/speedfs/speedfs/internal/storage
+
+cmd: cli
+
+cli:
+	go build -o bin/speedfs-cli github.com/speedfs/speedfs/cmd/cli
 
 test:
 	go test github.com/speedfs/speedfs/internal/storage
