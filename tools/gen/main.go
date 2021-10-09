@@ -304,6 +304,32 @@ func (s *service) %s(ctx context.Context, buf []byte) (proto.Message, error) {
 }
 `
 
+const connTpl = `
+type Conn struct {
+	*proto.Conn
+}
+
+func NewConn(conn net.Conn) *Conn {
+	return &Conn{
+		Conn: proto.NewConn(conn),
+	}
+}
+
+`
+
+const connMethodTpl = `
+func (c *Conn) %s(ctx context.Context, cmd *%sCommand)(*%sReply, error) {
+	if err := c.Write(ctx, cmd); err != nil {
+		return nil, err
+	}
+	reply := new(%sReply)
+	if err := c.Read(ctx, reply); err != nil {
+		return nil, err
+	}
+	return reply, nil
+}
+`
+
 func generateRPCProtoFile(fset *token.FileSet, f *ast.File, output string) {
 	var b strings.Builder
 
@@ -315,6 +341,7 @@ func generateRPCProtoFile(fset *token.FileSet, f *ast.File, output string) {
 		b.WriteString(`
 import (
 	"context"
+	"net"
 	"syscall"
 
 	"github.com/speedfs/speedfs/proto"
@@ -348,7 +375,9 @@ import (
 			b.WriteString(fmt.Sprintf(handlerTpl, typeSpec.Name.Name))
 			generateHandlerInitMethods(fset, typeSpec, interfaceType, &b)
 			b.WriteString(fmt.Sprintf(serviceTpl, typeSpec.Name.Name, typeSpec.Name.Name))
-			generateMethod(fset, typeSpec, interfaceType, &b)
+			generateServiceMethods(fset, typeSpec, interfaceType, &b)
+			b.WriteString(connTpl)
+			generateConnMethods(fset, typeSpec, interfaceType, &b)
 		}
 	}
 
@@ -385,7 +414,7 @@ func (h *handler) initMethods() {
 	b.WriteString("}\n\n")
 }
 
-func generateMethod(fset *token.FileSet, typeSpec *ast.TypeSpec, interfaceType *ast.InterfaceType, b *strings.Builder) {
+func generateServiceMethods(fset *token.FileSet, typeSpec *ast.TypeSpec, interfaceType *ast.InterfaceType, b *strings.Builder) {
 	for _, method := range interfaceType.Methods.List {
 		switch method.Type.(type) {
 		case *ast.FuncType:
@@ -395,6 +424,20 @@ func generateMethod(fset *token.FileSet, typeSpec *ast.TypeSpec, interfaceType *
 
 			name := method.Names[0]
 			b.WriteString(fmt.Sprintf(methodTpl, name, name, name))
+		}
+	}
+}
+
+func generateConnMethods(fset *token.FileSet, typeSpec *ast.TypeSpec, interfaceType *ast.InterfaceType, b *strings.Builder) {
+	for _, method := range interfaceType.Methods.List {
+		switch method.Type.(type) {
+		case *ast.FuncType:
+			if len(method.Names) == 0 {
+				break
+			}
+
+			name := method.Names[0]
+			b.WriteString(fmt.Sprintf(connMethodTpl, name, name, name, name))
 		}
 	}
 }

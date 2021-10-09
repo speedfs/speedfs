@@ -4,6 +4,7 @@ package tracker
 
 import (
 	"context"
+	"net"
 	"syscall"
 
 	"github.com/speedfs/speedfs/proto"
@@ -55,4 +56,25 @@ func (s *service) QueryStorage(ctx context.Context, buf []byte) (proto.Message, 
 	}
 
 	return s.s.QueryStorage(ctx, cmd)
+}
+
+type Conn struct {
+	*proto.Conn
+}
+
+func NewConn(conn net.Conn) *Conn {
+	return &Conn{
+		Conn: proto.NewConn(conn),
+	}
+}
+
+func (c *Conn) QueryStorage(ctx context.Context, cmd *QueryStorageCommand) (*QueryStorageReply, error) {
+	if err := c.Write(ctx, cmd); err != nil {
+		return nil, err
+	}
+	reply := new(QueryStorageReply)
+	if err := c.Read(ctx, reply); err != nil {
+		return nil, err
+	}
+	return reply, nil
 }
