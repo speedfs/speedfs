@@ -69,14 +69,11 @@ func (x *GroupStat) DecodeFrom(dec *proto.Decoder) error {
 
 // EncodeTo
 func (x *GetGroupCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdGetGroup)
-
 	enc.EncodeBytes(x.GroupName[:])
 }
 
 // DecodeFrom
 func (x *GetGroupCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdGetGroup)
 
 	var err error
 
@@ -87,16 +84,18 @@ func (x *GetGroupCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *GetGroupCommand) Cmd() proto.Cmd {
+	return CmdGetGroup
+}
+
 // EncodeTo
 func (x *GetGroupReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	x.GroupStat.EncodeTo(enc)
 }
 
 // DecodeFrom
 func (x *GetGroupReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -107,42 +106,48 @@ func (x *GetGroupReply) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *GetGroupReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *ListGroupsCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdListGroups)
-
 }
 
 // DecodeFrom
 func (x *ListGroupsCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdListGroups)
 
 	return nil
+}
+
+// Cmd
+func (x *ListGroupsCommand) Cmd() proto.Cmd {
+	return CmdListGroups
 }
 
 // EncodeTo
 func (x *ListGroupsReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *ListGroupsReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *ListGroupsReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *DeleteGroupCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdDeleteGroup)
-
 	enc.EncodeBytes(x.GroupName[:])
 }
 
 // DecodeFrom
 func (x *DeleteGroupCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdDeleteGroup)
 
 	var err error
 
@@ -153,29 +158,33 @@ func (x *DeleteGroupCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *DeleteGroupCommand) Cmd() proto.Cmd {
+	return CmdDeleteGroup
+}
+
 // EncodeTo
 func (x *DeleteGroupReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *DeleteGroupReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *DeleteGroupReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *ListGroupStoragesCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdListGroupStorages)
-
 	enc.EncodeBytes(x.GroupName[:])
 }
 
 // DecodeFrom
 func (x *ListGroupStoragesCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdListGroupStorages)
 
 	var err error
 
@@ -186,30 +195,34 @@ func (x *ListGroupStoragesCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *ListGroupStoragesCommand) Cmd() proto.Cmd {
+	return CmdListGroupStorages
+}
+
 // EncodeTo
 func (x *ListGroupStoragesReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *ListGroupStoragesReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *ListGroupStoragesReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *GetStorageCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdGetStorage)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeBytes(x.StorageID[:])
 }
 
 // DecodeFrom
 func (x *GetStorageCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdGetStorage)
 
 	var err error
 
@@ -223,30 +236,34 @@ func (x *GetStorageCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *GetStorageCommand) Cmd() proto.Cmd {
+	return CmdGetStorage
+}
+
 // EncodeTo
 func (x *GetStorageReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *GetStorageReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *GetStorageReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *DeleteStorageCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdDeleteStorage)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeBytes(x.StorageID[:])
 }
 
 // DecodeFrom
 func (x *DeleteStorageCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdDeleteStorage)
 
 	var err error
 
@@ -260,30 +277,34 @@ func (x *DeleteStorageCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *DeleteStorageCommand) Cmd() proto.Cmd {
+	return CmdDeleteStorage
+}
+
 // EncodeTo
 func (x *DeleteStorageReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *DeleteStorageReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *DeleteStorageReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *SetTrunkServerCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdSetTrunkServer)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeBytes(x.StorageID[:])
 }
 
 // DecodeFrom
 func (x *SetTrunkServerCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdSetTrunkServer)
 
 	var err error
 
@@ -297,17 +318,24 @@ func (x *SetTrunkServerCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *SetTrunkServerCommand) Cmd() proto.Cmd {
+	return CmdSetTrunkServer
+}
+
 // EncodeTo
 func (x *SetTrunkServerReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *SetTrunkServerReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
+}
+
+// Cmd
+func (x *SetTrunkServerReply) Cmd() proto.Cmd {
+	return CmdReply
 }
 
 // EncodeTo
@@ -333,21 +361,21 @@ func (x *Addr) DecodeFrom(dec *proto.Decoder) error {
 
 // EncodeTo
 func (x *QueryStorageCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdQueryStorage)
-
 }
 
 // DecodeFrom
 func (x *QueryStorageCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdQueryStorage)
 
 	return nil
 }
 
+// Cmd
+func (x *QueryStorageCommand) Cmd() proto.Cmd {
+	return CmdQueryStorage
+}
+
 // EncodeTo
 func (x *QueryStorageReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 	enc.EncodeUint8(x.StorePathIndex)
@@ -355,7 +383,6 @@ func (x *QueryStorageReply) EncodeTo(enc *proto.Encoder) {
 
 // DecodeFrom
 func (x *QueryStorageReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -372,16 +399,18 @@ func (x *QueryStorageReply) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *QueryStorageReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *QueryGroupStorageCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdQueryGroupStorage)
-
 	enc.EncodeBytes(x.GroupName[:])
 }
 
 // DecodeFrom
 func (x *QueryGroupStorageCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdQueryGroupStorage)
 
 	var err error
 
@@ -392,10 +421,13 @@ func (x *QueryGroupStorageCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *QueryGroupStorageCommand) Cmd() proto.Cmd {
+	return CmdQueryGroupStorage
+}
+
 // EncodeTo
 func (x *QueryGroupStorageReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 	enc.EncodeUint8(x.StorePathIndex)
@@ -403,7 +435,6 @@ func (x *QueryGroupStorageReply) EncodeTo(enc *proto.Encoder) {
 
 // DecodeFrom
 func (x *QueryGroupStorageReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -420,30 +451,34 @@ func (x *QueryGroupStorageReply) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *QueryGroupStorageReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *QueryStoragesCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdQueryStorages)
-
 }
 
 // DecodeFrom
 func (x *QueryStoragesCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdQueryStorages)
 
 	return nil
 }
 
+// Cmd
+func (x *QueryStoragesCommand) Cmd() proto.Cmd {
+	return CmdQueryStorages
+}
+
 // EncodeTo
 func (x *QueryStoragesReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
 // DecodeFrom
 func (x *QueryStoragesReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -457,16 +492,18 @@ func (x *QueryStoragesReply) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *QueryStoragesReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *QueryGroupStoragesCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdQueryGroupStorages)
-
 	enc.EncodeBytes(x.GroupName[:])
 }
 
 // DecodeFrom
 func (x *QueryGroupStoragesCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdQueryGroupStorages)
 
 	var err error
 
@@ -477,17 +514,19 @@ func (x *QueryGroupStoragesCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *QueryGroupStoragesCommand) Cmd() proto.Cmd {
+	return CmdQueryGroupStorages
+}
+
 // EncodeTo
 func (x *QueryGroupStoragesReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeUint8(x.StorePathIndex)
 }
 
 // DecodeFrom
 func (x *QueryGroupStoragesReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -501,17 +540,19 @@ func (x *QueryGroupStoragesReply) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *QueryGroupStoragesReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *QueryDownloadableStorageCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdQueryDownloadableStorage)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
 func (x *QueryDownloadableStorageCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdQueryDownloadableStorage)
 
 	var err error
 
@@ -523,17 +564,19 @@ func (x *QueryDownloadableStorageCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *QueryDownloadableStorageCommand) Cmd() proto.Cmd {
+	return CmdQueryDownloadableStorage
+}
+
 // EncodeTo
 func (x *QueryDownloadableStorageReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 }
 
 // DecodeFrom
 func (x *QueryDownloadableStorageReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -547,17 +590,19 @@ func (x *QueryDownloadableStorageReply) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *QueryDownloadableStorageReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *QueryDownloadableStoragesCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdQueryDownloadableStorages)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
 func (x *QueryDownloadableStoragesCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdQueryDownloadableStorages)
 
 	var err error
 
@@ -569,17 +614,19 @@ func (x *QueryDownloadableStoragesCommand) DecodeFrom(dec *proto.Decoder) error 
 	return nil
 }
 
+// Cmd
+func (x *QueryDownloadableStoragesCommand) Cmd() proto.Cmd {
+	return CmdQueryDownloadableStorages
+}
+
 // EncodeTo
 func (x *QueryDownloadableStoragesReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeUint8(x.Port)
 }
 
 // DecodeFrom
 func (x *QueryDownloadableStoragesReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -593,17 +640,19 @@ func (x *QueryDownloadableStoragesReply) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *QueryDownloadableStoragesReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *QueryUpdatableStorageCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdQueryUpdatableStorage)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
 func (x *QueryUpdatableStorageCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdQueryUpdatableStorage)
 
 	var err error
 
@@ -615,17 +664,19 @@ func (x *QueryUpdatableStorageCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *QueryUpdatableStorageCommand) Cmd() proto.Cmd {
+	return CmdQueryUpdatableStorage
+}
+
 // EncodeTo
 func (x *QueryUpdatableStorageReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.GroupName[:])
 	x.Addr.EncodeTo(enc)
 }
 
 // DecodeFrom
 func (x *QueryUpdatableStorageReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -637,4 +688,9 @@ func (x *QueryUpdatableStorageReply) DecodeFrom(dec *proto.Decoder) error {
 	}
 
 	return nil
+}
+
+// Cmd
+func (x *QueryUpdatableStorageReply) Cmd() proto.Cmd {
+	return CmdReply
 }

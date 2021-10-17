@@ -8,14 +8,11 @@ import (
 
 // EncodeTo
 func (x *ReportStorageIDCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReportStorageID)
-
 	enc.EncodeBytes(x.StorageID[:])
 }
 
 // DecodeFrom
 func (x *ReportStorageIDCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReportStorageID)
 
 	var err error
 
@@ -26,23 +23,28 @@ func (x *ReportStorageIDCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *ReportStorageIDCommand) Cmd() proto.Cmd {
+	return CmdReportStorageID
+}
+
 // EncodeTo
 func (x *ReportStorageIDReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *ReportStorageIDReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *ReportStorageIDReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *UploadFileCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdUploadFile)
-
 	enc.EncodeUint8(x.StorePathIndex)
 	enc.EncodeUint64(x.MetadataLen)
 	enc.EncodeUint64(x.Size)
@@ -53,7 +55,6 @@ func (x *UploadFileCommand) EncodeTo(enc *proto.Encoder) {
 
 // DecodeFrom
 func (x *UploadFileCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdUploadFile)
 
 	var err error
 
@@ -81,17 +82,19 @@ func (x *UploadFileCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *UploadFileCommand) Cmd() proto.Cmd {
+	return CmdUploadFile
+}
+
 // EncodeTo
 func (x *UploadFileReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
 func (x *UploadFileReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -103,10 +106,13 @@ func (x *UploadFileReply) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *UploadFileReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *UploadAppenderFileCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdUploadAppenderFile)
-
 	enc.EncodeUint8(x.StorePathIndex)
 	enc.EncodeUint64(x.MetadataLen)
 	enc.EncodeUint64(x.Size)
@@ -117,7 +123,6 @@ func (x *UploadAppenderFileCommand) EncodeTo(enc *proto.Encoder) {
 
 // DecodeFrom
 func (x *UploadAppenderFileCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdUploadAppenderFile)
 
 	var err error
 
@@ -145,17 +150,19 @@ func (x *UploadAppenderFileCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *UploadAppenderFileCommand) Cmd() proto.Cmd {
+	return CmdUploadAppenderFile
+}
+
 // EncodeTo
 func (x *UploadAppenderFileReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
 func (x *UploadAppenderFileReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -167,17 +174,19 @@ func (x *UploadAppenderFileReply) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *UploadAppenderFileReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *DeleteFileCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdDeleteFile)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
 func (x *DeleteFileCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdDeleteFile)
 
 	var err error
 
@@ -189,23 +198,28 @@ func (x *DeleteFileCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *DeleteFileCommand) Cmd() proto.Cmd {
+	return CmdDeleteFile
+}
+
 // EncodeTo
 func (x *DeleteFileReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *DeleteFileReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *DeleteFileReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *SetMetadataCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdSetMetadata)
-
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.MetadataLen)
 	enc.EncodeByte(x.Flag)
@@ -216,7 +230,6 @@ func (x *SetMetadataCommand) EncodeTo(enc *proto.Encoder) {
 
 // DecodeFrom
 func (x *SetMetadataCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdSetMetadata)
 
 	var err error
 
@@ -250,30 +263,34 @@ func (x *SetMetadataCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *SetMetadataCommand) Cmd() proto.Cmd {
+	return CmdSetMetadata
+}
+
 // EncodeTo
 func (x *SetMetadataReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *SetMetadataReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *SetMetadataReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *GetMetadataCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdGetMetadata)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
 func (x *GetMetadataCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdGetMetadata)
 
 	var err error
 
@@ -285,26 +302,31 @@ func (x *GetMetadataCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *GetMetadataCommand) Cmd() proto.Cmd {
+	return CmdGetMetadata
+}
+
 // EncodeTo
 func (x *GetMetadataReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeString(x.Metadata)
 }
 
 // DecodeFrom
 func (x *GetMetadataReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	x.Metadata = string(dec.Bytes())
 
 	return nil
 }
 
+// Cmd
+func (x *GetMetadataReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *DownloadFileCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdDownloadFile)
-
 	enc.EncodeUint64(x.Offset)
 	enc.EncodeUint64(x.Size)
 	enc.EncodeBytes(x.GroupName[:])
@@ -313,7 +335,6 @@ func (x *DownloadFileCommand) EncodeTo(enc *proto.Encoder) {
 
 // DecodeFrom
 func (x *DownloadFileCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdDownloadFile)
 
 	var err error
 
@@ -331,33 +352,37 @@ func (x *DownloadFileCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *DownloadFileCommand) Cmd() proto.Cmd {
+	return CmdDownloadFile
+}
+
 // EncodeTo
 func (x *DownloadFileReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.Content[:])
 }
 
 // DecodeFrom
 func (x *DownloadFileReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	x.Content = dec.Bytes()
 
 	return nil
 }
 
+// Cmd
+func (x *DownloadFileReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *GetFileInfoCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdGetFileInfo)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
 func (x *GetFileInfoCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdGetFileInfo)
 
 	var err error
 
@@ -369,10 +394,13 @@ func (x *GetFileInfoCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *GetFileInfoCommand) Cmd() proto.Cmd {
+	return CmdGetFileInfo
+}
+
 // EncodeTo
 func (x *GetFileInfoReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeUint64(x.Size)
 	enc.EncodeUint64(x.CreateTime)
 	enc.EncodeUint64(x.CRC32)
@@ -381,7 +409,6 @@ func (x *GetFileInfoReply) EncodeTo(enc *proto.Encoder) {
 
 // DecodeFrom
 func (x *GetFileInfoReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -401,10 +428,13 @@ func (x *GetFileInfoReply) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *GetFileInfoReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *AppendFileCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdAppendFile)
-
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Size)
 	enc.EncodeString(x.Filename)
@@ -413,7 +443,6 @@ func (x *AppendFileCommand) EncodeTo(enc *proto.Encoder) {
 
 // DecodeFrom
 func (x *AppendFileCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdAppendFile)
 
 	var err error
 
@@ -438,23 +467,28 @@ func (x *AppendFileCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *AppendFileCommand) Cmd() proto.Cmd {
+	return CmdAppendFile
+}
+
 // EncodeTo
 func (x *AppendFileReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *AppendFileReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *AppendFileReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *ModifyFileCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdModifyFile)
-
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Offset)
 	enc.EncodeUint64(x.Size)
@@ -464,7 +498,6 @@ func (x *ModifyFileCommand) EncodeTo(enc *proto.Encoder) {
 
 // DecodeFrom
 func (x *ModifyFileCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdModifyFile)
 
 	var err error
 
@@ -492,23 +525,28 @@ func (x *ModifyFileCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *ModifyFileCommand) Cmd() proto.Cmd {
+	return CmdModifyFile
+}
+
 // EncodeTo
 func (x *ModifyFileReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *ModifyFileReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *ModifyFileReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *TruncateFileCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdTruncateFile)
-
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Size)
 	enc.EncodeString(x.Filename)
@@ -516,7 +554,6 @@ func (x *TruncateFileCommand) EncodeTo(enc *proto.Encoder) {
 
 // DecodeFrom
 func (x *TruncateFileCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdTruncateFile)
 
 	var err error
 
@@ -537,46 +574,52 @@ func (x *TruncateFileCommand) DecodeFrom(dec *proto.Decoder) error {
 	return nil
 }
 
+// Cmd
+func (x *TruncateFileCommand) Cmd() proto.Cmd {
+	return CmdTruncateFile
+}
+
 // EncodeTo
 func (x *TruncateFileReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *TruncateFileReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
 }
 
+// Cmd
+func (x *TruncateFileReply) Cmd() proto.Cmd {
+	return CmdReply
+}
+
 // EncodeTo
 func (x *RenameFileCommand) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdRenameFile)
-
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
 func (x *RenameFileCommand) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdRenameFile)
 
 	x.Filename = string(dec.Bytes())
 
 	return nil
 }
 
+// Cmd
+func (x *RenameFileCommand) Cmd() proto.Cmd {
+	return CmdRenameFile
+}
+
 // EncodeTo
 func (x *RenameFileReply) EncodeTo(enc *proto.Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
 func (x *RenameFileReply) DecodeFrom(dec *proto.Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	var err error
 
@@ -586,4 +629,9 @@ func (x *RenameFileReply) DecodeFrom(dec *proto.Decoder) error {
 	x.Filename = string(dec.Bytes())
 
 	return nil
+}
+
+// Cmd
+func (x *RenameFileReply) Cmd() proto.Cmd {
+	return CmdReply
 }

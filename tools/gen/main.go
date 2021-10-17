@@ -97,6 +97,7 @@ func generateProtoFile(fset *token.FileSet, f *ast.File, output string) {
 
 			generateEncodeTo(typeSpec, structType, &b)
 			generateDecodeFrom(typeSpec, structType, &b)
+			generateCmd(typeSpec, structType, &b)
 		}
 	}
 
@@ -119,13 +120,7 @@ func generateEncodeTo(typeSpec *ast.TypeSpec, structType *ast.StructType, b *str
 	b.WriteString("// EncodeTo\n")
 	typeName := typeSpec.Name.Name
 	b.WriteString(fmt.Sprintf("func (x *%s) EncodeTo(enc *%sEncoder) {\n", typeName, protoPrefix))
-	// cmd
-	if index := bytes.LastIndex([]byte(typeName), []byte("Command")); index > 0 {
-		b.WriteString(fmt.Sprintf("\tx.Cmd = uint8(Cmd%s)\n\n", typeName[0:index]))
-	}
-	if index := bytes.LastIndex([]byte(typeName), []byte("Reply")); index > 0 {
-		b.WriteString("\tx.Cmd = uint8(CmdReply)\n\n")
-	}
+
 	// fields
 	for _, field := range structType.Fields.List {
 		switch typ := field.Type.(type) {
@@ -156,13 +151,7 @@ func generateDecodeFrom(typeSpec *ast.TypeSpec, structType *ast.StructType, b *s
 	b.WriteString("// DecodeFrom\n")
 	typeName := typeSpec.Name.Name
 	b.WriteString(fmt.Sprintf("func (x *%s) DecodeFrom(dec *%sDecoder) error {\n", typeName, protoPrefix))
-	// cmd
-	if index := bytes.LastIndex([]byte(typeName), []byte("Command")); index > 0 {
-		b.WriteString(fmt.Sprintf("\tx.Cmd = uint8(Cmd%s)\n\n", typeName[0:index]))
-	}
-	if index := bytes.LastIndex([]byte(typeName), []byte("Reply")); index > 0 {
-		b.WriteString("\tx.Cmd = uint8(CmdReply)\n")
-	}
+
 	hasErrDecl := false
 	// fields
 	for _, field := range structType.Fields.List {
@@ -252,6 +241,23 @@ func generateDecodeFrom(typeSpec *ast.TypeSpec, structType *ast.StructType, b *s
 		}
 	}
 	b.WriteString("\n\n\treturn nil\n}\n")
+}
+
+const cmdTpl = `
+// Cmd
+func (x *%s) Cmd() %sCmd {
+	return Cmd%s
+}
+`
+
+func generateCmd(typeSpec *ast.TypeSpec, structType *ast.StructType, b *strings.Builder) {
+	typeName := typeSpec.Name.Name
+	// cmd
+	if index := bytes.LastIndex([]byte(typeName), []byte("Command")); index > 0 {
+		b.WriteString(fmt.Sprintf(cmdTpl, typeName, protoPrefix, typeName[0:index]))
+	} else if index := bytes.LastIndex([]byte(typeName), []byte("Reply")); index > 0 {
+		b.WriteString(fmt.Sprintf(cmdTpl, typeName, protoPrefix, "Reply"))
+	}
 }
 
 const handlerTpl = `

@@ -4,15 +4,17 @@ package proto
 
 // EncodeTo
 func (x *QuitCommand) EncodeTo(enc *Encoder) {
-	x.Cmd = uint8(CmdQuit)
-
 }
 
 // DecodeFrom
 func (x *QuitCommand) DecodeFrom(dec *Decoder) error {
-	x.Cmd = uint8(CmdQuit)
 
 	return nil
+}
+
+// Cmd
+func (x *QuitCommand) Cmd() Cmd {
+	return CmdQuit
 }
 
 // EncodeTo
@@ -27,26 +29,30 @@ func (x *Reply) DecodeFrom(dec *Decoder) error {
 
 // EncodeTo
 func (x *PingCommand) EncodeTo(enc *Encoder) {
-	x.Cmd = uint8(CmdPing)
-
 }
 
 // DecodeFrom
 func (x *PingCommand) DecodeFrom(dec *Decoder) error {
-	x.Cmd = uint8(CmdPing)
 
 	return nil
+}
+
+// Cmd
+func (x *PingCommand) Cmd() Cmd {
+	return CmdPing
 }
 
 // EncodeTo
 func (x *PingReply) EncodeTo(enc *Encoder) {
-	x.Cmd = uint8(CmdReply)
-
 }
 
 // DecodeFrom
 func (x *PingReply) DecodeFrom(dec *Decoder) error {
-	x.Cmd = uint8(CmdReply)
 
 	return nil
+}
+
+// Cmd
+func (x *PingReply) Cmd() Cmd {
+	return CmdReply
 }
