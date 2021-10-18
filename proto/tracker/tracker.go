@@ -82,83 +82,69 @@ type GroupStat struct {
 
 // GetGroupCommand
 type GetGroupCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 }
 
 // GetGroupReply
 type GetGroupReply struct {
-	proto.Header
 	GroupStat GroupStat
 }
 
 // ListGroupsCommand
 type ListGroupsCommand struct {
-	proto.Header
 }
 
 // ListGroupsReply
 type ListGroupsReply struct {
-	proto.Header
 	GroupStats []GroupStat
 }
 
 // DeleteGroupCommand
 type DeleteGroupCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 }
 
 // DeleteGroupReply
 type DeleteGroupReply struct {
-	proto.Header
 }
 
 // ListGroupStoragesCommand
 type ListGroupStoragesCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 }
 
 // ListGroupStoragesReply
 type ListGroupStoragesReply struct {
-	proto.Header
 }
 
 // GetStorageCommand
 type GetStorageCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	StorageID [proto.MaxStorageIDLen]byte
 }
 
 // GetStorageReply
 type GetStorageReply struct {
-	proto.Header
 }
 
 // DeleteStorageCommand
 type DeleteStorageCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	StorageID [proto.MaxStorageIDLen]byte
 }
 
 // DeleteStorageReply
 type DeleteStorageReply struct {
-	proto.Header
 }
 
 // SetTrunkServerCommand
 type SetTrunkServerCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	StorageID [proto.MaxStorageIDLen]byte
 }
 
 // SetTrunkServerReply
 type SetTrunkServerReply struct {
-	proto.Header
 }
 
 // Addr
@@ -169,12 +155,10 @@ type Addr struct {
 
 // QueryStorageCommand
 type QueryStorageCommand struct {
-	proto.Header
 }
 
 // QueryStorageReply
 type QueryStorageReply struct {
-	proto.Header
 	GroupName      [proto.MaxGroupNameLen]byte
 	Addr           Addr
 	StorePathIndex uint8
@@ -182,13 +166,11 @@ type QueryStorageReply struct {
 
 // QueryGroupStorageCommand
 type QueryGroupStorageCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 }
 
 // QueryGroupStorageReply
 type QueryGroupStorageReply struct {
-	proto.Header
 	GroupName      [proto.MaxGroupNameLen]byte
 	Addr           Addr
 	StorePathIndex uint8
@@ -196,12 +178,10 @@ type QueryGroupStorageReply struct {
 
 // QueryStoragesCommand
 type QueryStoragesCommand struct {
-	proto.Header
 }
 
 // QueryStoragesReply
 type QueryStoragesReply struct {
-	proto.Header
 	GroupName      [proto.MaxGroupNameLen]byte
 	Addr           []Addr
 	StorePathIndex uint8
@@ -209,13 +189,11 @@ type QueryStoragesReply struct {
 
 // QueryGroupStoragesCommand
 type QueryGroupStoragesCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 }
 
 // QueryGroupStoragesReply
 type QueryGroupStoragesReply struct {
-	proto.Header
 	GroupName      [proto.MaxGroupNameLen]byte
 	Addr           []Addr
 	StorePathIndex uint8
@@ -223,28 +201,24 @@ type QueryGroupStoragesReply struct {
 
 // QueryDownloadableStorageCommand
 type QueryDownloadableStorageCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Filename  string
 }
 
 // QueryDownloadableStorageReply
 type QueryDownloadableStorageReply struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Addr      Addr
 }
 
 // QueryDownloadableStoragesCommand
 type QueryDownloadableStoragesCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Filename  string
 }
 
 // QueryDownloadableStoragesReply
 type QueryDownloadableStoragesReply struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Port      uint8
 	IPs       [][proto.MaxIPLen - 1]byte
@@ -252,14 +226,12 @@ type QueryDownloadableStoragesReply struct {
 
 // QueryUpdatableStorageCommand
 type QueryUpdatableStorageCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Filename  string
 }
 
 // QueryUpdatableStorageReply
 type QueryUpdatableStorageReply struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Addr      Addr
 }

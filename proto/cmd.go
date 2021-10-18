@@ -17,20 +17,16 @@ const (
 
 // QuitCommand
 type QuitCommand struct {
-	Header
 }
 
 // Reply
 type Reply struct {
-	Header
 }
 
 // PingCommand
 type PingCommand struct {
-	Header
 }
 
 // PingReply
 type PingReply struct {
-	Header
 }

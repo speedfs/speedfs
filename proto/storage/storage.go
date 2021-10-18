@@ -44,18 +44,15 @@ type StorageService interface {
 
 // ReportIDCommand
 type ReportStorageIDCommand struct {
-	proto.Header
 	StorageID [proto.MaxStorageIDLen]byte
 }
 
 // ReportStorageIDReply
 type ReportStorageIDReply struct {
-	proto.Header
 }
 
 // UploadFileCommand
 type UploadFileCommand struct {
-	proto.Header
 	StorePathIndex uint8
 	MetadataLen    uint64
 	Size           uint64
@@ -66,14 +63,12 @@ type UploadFileCommand struct {
 
 // UploadFileReply
 type UploadFileReply struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Filename  string
 }
 
 // UploadAppenderFileCommand
 type UploadAppenderFileCommand struct {
-	proto.Header
 	StorePathIndex uint8
 	MetadataLen    uint64
 	Size           uint64
@@ -84,26 +79,22 @@ type UploadAppenderFileCommand struct {
 
 // UploadAppenderFileReply
 type UploadAppenderFileReply struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Filename  string
 }
 
 // DeleteFileCommand
 type DeleteFileCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Filename  string
 }
 
 // DeleteFileReply
 type DeleteFileReply struct {
-	proto.Header
 }
 
 // SetMetadataCommand
 type SetMetadataCommand struct {
-	proto.Header
 	FilenameLen uint64
 	MetadataLen uint64
 	Flag        byte
@@ -114,25 +105,21 @@ type SetMetadataCommand struct {
 
 // SetMetadataReply
 type SetMetadataReply struct {
-	proto.Header
 }
 
 // GetMetadataCommand
 type GetMetadataCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Filename  string
 }
 
 // GetMetadataReply
 type GetMetadataReply struct {
-	proto.Header
 	Metadata string
 }
 
 // DownloadFileCommand
 type DownloadFileCommand struct {
-	proto.Header
 	Offset    uint64
 	Size      uint64
 	GroupName [proto.MaxGroupNameLen]byte
@@ -141,20 +128,17 @@ type DownloadFileCommand struct {
 
 // DownloadFileReply
 type DownloadFileReply struct {
-	proto.Header
 	Content []byte
 }
 
 // GetFileInfoCommand
 type GetFileInfoCommand struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Filename  string
 }
 
 // GetFileInfoReply
 type GetFileInfoReply struct {
-	proto.Header
 	Size       uint64
 	CreateTime uint64
 	CRC32      uint64
@@ -163,7 +147,6 @@ type GetFileInfoReply struct {
 
 // AppendFileCommand
 type AppendFileCommand struct {
-	proto.Header
 	FilenameLen uint64
 	Size        uint64
 	Filename    string `proto:"len:FilenameLen"`
@@ -172,12 +155,10 @@ type AppendFileCommand struct {
 
 // AppendFileReply
 type AppendFileReply struct {
-	proto.Header
 }
 
 // ModifyFileCommand
 type ModifyFileCommand struct {
-	proto.Header
 	FilenameLen uint64
 	Offset      uint64
 	Size        uint64
@@ -187,12 +168,10 @@ type ModifyFileCommand struct {
 
 // ModifyFileReply
 type ModifyFileReply struct {
-	proto.Header
 }
 
 // TruncateFileCommand
 type TruncateFileCommand struct {
-	proto.Header
 	FilenameLen uint64
 	Size        uint64
 	Filename    string `proto:"len:FilenameLen"`
@@ -200,18 +179,15 @@ type TruncateFileCommand struct {
 
 // TruncateFileReply
 type TruncateFileReply struct {
-	proto.Header
 }
 
 // RenameFileCommand
 type RenameFileCommand struct {
-	proto.Header
 	Filename string
 }
 
 // RenameFileReply
 type RenameFileReply struct {
-	proto.Header
 	GroupName [proto.MaxGroupNameLen]byte
 	Filename  string
 }
