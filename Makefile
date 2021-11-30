@@ -23,8 +23,14 @@ pkg:
 
 cmd: cli
 
-cli:
+cli: client
 	go build -o bin/speedfs-cli github.com/speedfs/speedfs/cmd/cli
+
+client:
+	go build github.com/speedfs/speedfs/client
 
 test:
 	go test github.com/speedfs/speedfs/internal/storage
+
+clean:
+	rm -vf bin/*
