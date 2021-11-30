@@ -165,99 +165,72 @@ func NewConn(conn net.Conn) *Conn {
 }
 
 func (c *Conn) UploadFile(ctx context.Context, cmd *UploadFileCommand) (*UploadFileReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(UploadFileReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
 func (c *Conn) UploadAppenderFile(ctx context.Context, cmd *UploadAppenderFileCommand) (*UploadAppenderFileReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(UploadAppenderFileReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
 func (c *Conn) SetMetadata(ctx context.Context, cmd *SetMetadataCommand) (*SetMetadataReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(SetMetadataReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
 func (c *Conn) GetMetadata(ctx context.Context, cmd *GetMetadataCommand) (*GetMetadataReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(GetMetadataReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
 func (c *Conn) DownloadFile(ctx context.Context, cmd *DownloadFileCommand) (*DownloadFileReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(DownloadFileReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
 func (c *Conn) AppendFile(ctx context.Context, cmd *AppendFileCommand) (*AppendFileReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(AppendFileReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
 func (c *Conn) ModifyFile(ctx context.Context, cmd *ModifyFileCommand) (*ModifyFileReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(ModifyFileReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
 func (c *Conn) TruncateFile(ctx context.Context, cmd *TruncateFileCommand) (*TruncateFileReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(TruncateFileReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
 func (c *Conn) RenameFile(ctx context.Context, cmd *RenameFileCommand) (*RenameFileReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(RenameFileReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil

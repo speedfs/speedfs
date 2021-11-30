@@ -29,7 +29,7 @@ func (srv *Server) serve(l net.Listener) error {
 			return err
 		}
 
-		go srv.handle(NewConn(conn))
+		go srv.handle(proto.NewConn(conn))
 	}
 }
 
@@ -41,19 +41,20 @@ func (srv *Server) ListenAndServe() error {
 	return srv.serve(l)
 }
 
-func (srv *Server) handle(conn *Conn) error {
+func (srv *Server) handle(conn *proto.Conn) error {
 	for {
-		cmd, buf, err := conn.Read()
+		ctx := context.Background()
+		header, buf, err := conn.Read(ctx)
 		if err != nil {
 			return err
 		}
 
-		reply, err := srv.handler.Handle(context.TODO(), cmd, buf)
+		reply, err := srv.handler.Handle(ctx, uint8(header.Cmd), buf)
 		if err != nil {
 			return err
 		}
 
-		err = conn.Write(reply)
+		err = conn.Write(ctx, reply)
 		if err != nil {
 			return err
 		}

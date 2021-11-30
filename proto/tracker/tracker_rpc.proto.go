@@ -69,11 +69,8 @@ func NewConn(conn net.Conn) *Conn {
 }
 
 func (c *Conn) QueryStorage(ctx context.Context, cmd *QueryStorageCommand) (*QueryStorageReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(QueryStorageReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil

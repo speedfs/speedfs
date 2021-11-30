@@ -325,11 +325,8 @@ func NewConn(conn net.Conn) *Conn {
 
 const connMethodTpl = `
 func (c *Conn) %s(ctx context.Context, cmd *%sCommand)(*%sReply, error) {
-	if err := c.Write(ctx, cmd); err != nil {
-		return nil, err
-	}
 	reply := new(%sReply)
-	if err := c.Read(ctx, reply); err != nil {
+	if err := c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
