@@ -1,17 +1,19 @@
-.PHONY: pb gen
+.PHONY: pb rpcgen
 
-all: pb gen build test
+RPCGEN=bin/speedfs-rpcgen
+
+all: pb rpcgen build test
 
 pb:
 	protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto/storagepb/storage.proto
 	protoc --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative proto/trackerpb/tracker.proto
 
-gen:
-	go build -o bin/speedfs-gen tools/gen/*.go
-	bin/speedfs-gen -input proto/storage/storage.go -rpc 1
-	bin/speedfs-gen -input proto/tracker/tracker.go -rpc 1
-	bin/speedfs-gen -input proto/cmd.go
-	bin/speedfs-gen -input proto/header.go
+rpcgen:
+	go build -o ${RPCGEN} tools/rpcgen/*.go
+	${RPCGEN} -input proto/storage/storage.go -rpc 1
+	${RPCGEN} -input proto/tracker/tracker.go -rpc 1
+	${RPCGEN} -input proto/cmd.go
+	${RPCGEN} -input proto/header.go
 
 build: pkg cmd
 
