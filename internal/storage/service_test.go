@@ -4,9 +4,10 @@ import (
 	"testing"
 
 	"github.com/speedfs/speedfs/proto/storage"
+	"github.com/speedfs/speedfs/rpc"
 )
 
 func TestNewServer(t *testing.T) {
 	handler := storage.NewHandler(NewService())
-	NewServer(":8080", handler)
+	rpc.NewServer(":8080", handler)
 }

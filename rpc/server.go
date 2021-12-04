@@ -1,20 +1,18 @@
-package storage
+package rpc
 
 import (
 	"context"
 	"log"
 	"net"
-
-	"github.com/speedfs/speedfs/rpc"
 )
 
 type Server struct {
 	addr    string
-	handler rpc.Handler
+	handler Handler
 }
 
 // NewServer return a new Server
-func NewServer(addr string, handler rpc.Handler) *Server {
+func NewServer(addr string, handler Handler) *Server {
 	return &Server{
 		addr:    addr,
 		handler: handler,
@@ -29,7 +27,7 @@ func (srv *Server) serve(l net.Listener) error {
 			return err
 		}
 
-		go srv.handle(rpc.NewConn(conn))
+		go srv.handle(NewConn(conn))
 	}
 }
 
@@ -41,7 +39,7 @@ func (srv *Server) ListenAndServe() error {
 	return srv.serve(l)
 }
 
-func (srv *Server) handle(conn *rpc.Conn) error {
+func (srv *Server) handle(conn *Conn) error {
 	for {
 		ctx := context.Background()
 		header, buf, err := conn.Read(ctx)
