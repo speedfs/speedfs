@@ -13,11 +13,11 @@ import (
 type method func(ctx context.Context, buf []byte) (proto.Message, error)
 
 type handler struct {
-	methods [256]method
 	service *service
+	methods [256]method
 }
 
-func NewHandler(service TrackerService) proto.Handler {
+func NewHandler(service Service) proto.Handler {
 	h := &handler{
 		service: newService(service),
 	}
@@ -38,10 +38,10 @@ func (h *handler) initMethods() {
 }
 
 type service struct {
-	s TrackerService
+	s Service
 }
 
-func newService(s TrackerService) *service {
+func newService(s Service) *service {
 	return &service{
 		s: s,
 	}
@@ -58,19 +58,19 @@ func (s *service) QueryStorage(ctx context.Context, buf []byte) (proto.Message, 
 	return s.s.QueryStorage(ctx, cmd)
 }
 
-type Conn struct {
-	*proto.Conn
+type Client struct {
+	c *proto.Conn
 }
 
-func NewConn(conn net.Conn) *Conn {
-	return &Conn{
-		Conn: proto.NewConn(conn),
+func NewClient(conn net.Conn) *Client {
+	return &Client{
+		c: proto.NewConn(conn),
 	}
 }
 
-func (c *Conn) QueryStorage(ctx context.Context, cmd *QueryStorageCommand) (*QueryStorageReply, error) {
+func (c *Client) QueryStorage(ctx context.Context, cmd *QueryStorageCommand) (*QueryStorageReply, error) {
 	reply := new(QueryStorageReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil

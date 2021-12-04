@@ -264,8 +264,8 @@ const handlerTpl = `
 type method func(ctx context.Context, buf []byte) (proto.Message, error)
 
 type handler struct {
-	methods [256]method
 	service *service
+	methods [256]method
 }
 
 func NewHandler(service %s) proto.Handler {
@@ -310,23 +310,23 @@ func (s *service) %s(ctx context.Context, buf []byte) (proto.Message, error) {
 }
 `
 
-const connTpl = `
-type Conn struct {
-	*proto.Conn
+const clientTpl = `
+type Client struct {
+	c *proto.Conn
 }
 
-func NewConn(conn net.Conn) *Conn {
-	return &Conn{
-		Conn: proto.NewConn(conn),
+func NewClient(conn net.Conn) *Client {
+	return &Client{
+		c: proto.NewConn(conn),
 	}
 }
 
 `
 
-const connMethodTpl = `
-func (c *Conn) %s(ctx context.Context, cmd *%sCommand)(*%sReply, error) {
+const clientMethodTpl = `
+func (c *Client) %s(ctx context.Context, cmd *%sCommand)(*%sReply, error) {
 	reply := new(%sReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
@@ -379,8 +379,8 @@ import (
 			generateHandlerInitMethods(fset, typeSpec, interfaceType, &b)
 			b.WriteString(fmt.Sprintf(serviceTpl, typeSpec.Name.Name, typeSpec.Name.Name))
 			generateServiceMethods(fset, typeSpec, interfaceType, &b)
-			b.WriteString(connTpl)
-			generateConnMethods(fset, typeSpec, interfaceType, &b)
+			b.WriteString(clientTpl)
+			generateClientMethods(fset, typeSpec, interfaceType, &b)
 		}
 	}
 
@@ -431,7 +431,7 @@ func generateServiceMethods(fset *token.FileSet, typeSpec *ast.TypeSpec, interfa
 	}
 }
 
-func generateConnMethods(fset *token.FileSet, typeSpec *ast.TypeSpec, interfaceType *ast.InterfaceType, b *strings.Builder) {
+func generateClientMethods(fset *token.FileSet, typeSpec *ast.TypeSpec, interfaceType *ast.InterfaceType, b *strings.Builder) {
 	for _, method := range interfaceType.Methods.List {
 		switch method.Type.(type) {
 		case *ast.FuncType:
@@ -440,7 +440,7 @@ func generateConnMethods(fset *token.FileSet, typeSpec *ast.TypeSpec, interfaceT
 			}
 
 			name := method.Names[0]
-			b.WriteString(fmt.Sprintf(connMethodTpl, name, name, name, name))
+			b.WriteString(fmt.Sprintf(clientMethodTpl, name, name, name, name))
 		}
 	}
 }

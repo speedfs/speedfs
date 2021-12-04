@@ -30,7 +30,7 @@ const (
 	CmdRenameFile         proto.Cmd = 38
 )
 
-type StorageService interface {
+type Service interface {
 	UploadFile(ctx context.Context, cmd *UploadFileCommand) (*UploadFileReply, error)
 	UploadAppenderFile(ctx context.Context, cmd *UploadAppenderFileCommand) (*UploadAppenderFileReply, error)
 	SetMetadata(ctx context.Context, cmd *SetMetadataCommand) (*SetMetadataReply, error)

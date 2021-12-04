@@ -13,11 +13,11 @@ import (
 type method func(ctx context.Context, buf []byte) (proto.Message, error)
 
 type handler struct {
-	methods [256]method
 	service *service
+	methods [256]method
 }
 
-func NewHandler(service StorageService) proto.Handler {
+func NewHandler(service Service) proto.Handler {
 	h := &handler{
 		service: newService(service),
 	}
@@ -46,10 +46,10 @@ func (h *handler) initMethods() {
 }
 
 type service struct {
-	s StorageService
+	s Service
 }
 
-func newService(s StorageService) *service {
+func newService(s Service) *service {
 	return &service{
 		s: s,
 	}
@@ -154,83 +154,83 @@ func (s *service) RenameFile(ctx context.Context, buf []byte) (proto.Message, er
 	return s.s.RenameFile(ctx, cmd)
 }
 
-type Conn struct {
-	*proto.Conn
+type Client struct {
+	c *proto.Conn
 }
 
-func NewConn(conn net.Conn) *Conn {
-	return &Conn{
-		Conn: proto.NewConn(conn),
+func NewClient(conn net.Conn) *Client {
+	return &Client{
+		c: proto.NewConn(conn),
 	}
 }
 
-func (c *Conn) UploadFile(ctx context.Context, cmd *UploadFileCommand) (*UploadFileReply, error) {
+func (c *Client) UploadFile(ctx context.Context, cmd *UploadFileCommand) (*UploadFileReply, error) {
 	reply := new(UploadFileReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
-func (c *Conn) UploadAppenderFile(ctx context.Context, cmd *UploadAppenderFileCommand) (*UploadAppenderFileReply, error) {
+func (c *Client) UploadAppenderFile(ctx context.Context, cmd *UploadAppenderFileCommand) (*UploadAppenderFileReply, error) {
 	reply := new(UploadAppenderFileReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
-func (c *Conn) SetMetadata(ctx context.Context, cmd *SetMetadataCommand) (*SetMetadataReply, error) {
+func (c *Client) SetMetadata(ctx context.Context, cmd *SetMetadataCommand) (*SetMetadataReply, error) {
 	reply := new(SetMetadataReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
-func (c *Conn) GetMetadata(ctx context.Context, cmd *GetMetadataCommand) (*GetMetadataReply, error) {
+func (c *Client) GetMetadata(ctx context.Context, cmd *GetMetadataCommand) (*GetMetadataReply, error) {
 	reply := new(GetMetadataReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
-func (c *Conn) DownloadFile(ctx context.Context, cmd *DownloadFileCommand) (*DownloadFileReply, error) {
+func (c *Client) DownloadFile(ctx context.Context, cmd *DownloadFileCommand) (*DownloadFileReply, error) {
 	reply := new(DownloadFileReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
-func (c *Conn) AppendFile(ctx context.Context, cmd *AppendFileCommand) (*AppendFileReply, error) {
+func (c *Client) AppendFile(ctx context.Context, cmd *AppendFileCommand) (*AppendFileReply, error) {
 	reply := new(AppendFileReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
-func (c *Conn) ModifyFile(ctx context.Context, cmd *ModifyFileCommand) (*ModifyFileReply, error) {
+func (c *Client) ModifyFile(ctx context.Context, cmd *ModifyFileCommand) (*ModifyFileReply, error) {
 	reply := new(ModifyFileReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
-func (c *Conn) TruncateFile(ctx context.Context, cmd *TruncateFileCommand) (*TruncateFileReply, error) {
+func (c *Client) TruncateFile(ctx context.Context, cmd *TruncateFileCommand) (*TruncateFileReply, error) {
 	reply := new(TruncateFileReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil
 }
 
-func (c *Conn) RenameFile(ctx context.Context, cmd *RenameFileCommand) (*RenameFileReply, error) {
+func (c *Client) RenameFile(ctx context.Context, cmd *RenameFileCommand) (*RenameFileReply, error) {
 	reply := new(RenameFileReply)
-	if err := c.Call(ctx, cmd, reply); err != nil {
+	if err := c.c.Call(ctx, cmd, reply); err != nil {
 		return nil, err
 	}
 	return reply, nil

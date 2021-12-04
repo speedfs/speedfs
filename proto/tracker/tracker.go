@@ -60,7 +60,7 @@ const (
 	CmdQueryUpdatableStorage proto.Cmd = 103 // group name, file name
 )
 
-type TrackerService interface {
+type Service interface {
 	QueryStorage(ctx context.Context, cmd *QueryStorageCommand) (*QueryStorageReply, error)
 }
 
