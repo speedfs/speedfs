@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/speedfs/speedfs/proto"
+	"github.com/speedfs/speedfs/rpc"
 )
 
 const (
@@ -11,23 +12,23 @@ const (
 )
 
 const (
-	CmdReply proto.Cmd = 100
+	CmdReply rpc.Cmd = 100
 
-	CmdQuit proto.Cmd = 82
-	CmdPing proto.Cmd = 111
+	CmdQuit rpc.Cmd = 82
+	CmdPing rpc.Cmd = 111
 
-	CmdReportStorageID    proto.Cmd = 9
-	CmdUploadFile         proto.Cmd = 11
-	CmdUploadAppenderFile proto.Cmd = 21
-	CmdDeleteFile         proto.Cmd = 12
-	CmdSetMetadata        proto.Cmd = 13
-	CmdGetMetadata        proto.Cmd = 15
-	CmdDownloadFile       proto.Cmd = 14
-	CmdGetFileInfo        proto.Cmd = 22
-	CmdAppendFile         proto.Cmd = 24
-	CmdModifyFile         proto.Cmd = 34
-	CmdTruncateFile       proto.Cmd = 36
-	CmdRenameFile         proto.Cmd = 38
+	CmdReportStorageID    rpc.Cmd = 9
+	CmdUploadFile         rpc.Cmd = 11
+	CmdUploadAppenderFile rpc.Cmd = 21
+	CmdDeleteFile         rpc.Cmd = 12
+	CmdSetMetadata        rpc.Cmd = 13
+	CmdGetMetadata        rpc.Cmd = 15
+	CmdDownloadFile       rpc.Cmd = 14
+	CmdGetFileInfo        rpc.Cmd = 22
+	CmdAppendFile         rpc.Cmd = 24
+	CmdModifyFile         rpc.Cmd = 34
+	CmdTruncateFile       rpc.Cmd = 36
+	CmdRenameFile         rpc.Cmd = 38
 )
 
 type Service interface {

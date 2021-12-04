@@ -4,60 +4,61 @@ import (
 	"context"
 
 	"github.com/speedfs/speedfs/proto"
+	"github.com/speedfs/speedfs/rpc"
 )
 
 const (
-	CmdReply proto.Cmd = 100
+	CmdReply rpc.Cmd = 100
 
-	CmdQuit proto.Cmd = 82
-	CmdPing proto.Cmd = 111
+	CmdQuit rpc.Cmd = 82
+	CmdPing rpc.Cmd = 111
 
-	CmdTrackerSaveSysFilesBegin proto.Cmd = 61
-	CmdTrackerSaveSysFilesEnd   proto.Cmd = 62
-	CmdTrackerGetSysFile        proto.Cmd = 63
-	CmdTrackerGetStatus         proto.Cmd = 64
+	CmdTrackerSaveSysFilesBegin rpc.Cmd = 61
+	CmdTrackerSaveSysFilesEnd   rpc.Cmd = 62
+	CmdTrackerGetSysFile        rpc.Cmd = 63
+	CmdTrackerGetStatus         rpc.Cmd = 64
 
-	CmdTrackerPingLeader           proto.Cmd = 65
-	CmdTrackerNotifyNextLeader     proto.Cmd = 66
-	CmdTrackerCommitNextLeader     proto.Cmd = 67
-	CmdStorageNotifyReselectLeader proto.Cmd = 68
+	CmdTrackerPingLeader           rpc.Cmd = 65
+	CmdTrackerNotifyNextLeader     rpc.Cmd = 66
+	CmdTrackerCommitNextLeader     rpc.Cmd = 67
+	CmdStorageNotifyReselectLeader rpc.Cmd = 68
 
-	CmdStorageUpdateStatus      proto.Cmd = 59
-	CmdStorageGetIP             proto.Cmd = 60
-	CmdStorageListIDs           proto.Cmd = 69
-	CmdStorageGetID             proto.Cmd = 70
-	CmdStorageGetStatus         proto.Cmd = 71
-	CmdStorageGetTrunkFileID    proto.Cmd = 72
-	CmdStorageReportTrunkFileID proto.Cmd = 73
-	CmdStorageReportTrunkFree   proto.Cmd = 74
-	CmdStorageGetParams         proto.Cmd = 75
-	CmdStorageReportStatus      proto.Cmd = 76
-	CmdStorageGetChangeLog      proto.Cmd = 77
-	CmdStorageUpdateIP          proto.Cmd = 78
-	CmdStorageJoin              proto.Cmd = 81
-	CmdStorageHeartbeat         proto.Cmd = 83
-	CmdStorageReportDiskUsage   proto.Cmd = 84
+	CmdStorageUpdateStatus      rpc.Cmd = 59
+	CmdStorageGetIP             rpc.Cmd = 60
+	CmdStorageListIDs           rpc.Cmd = 69
+	CmdStorageGetID             rpc.Cmd = 70
+	CmdStorageGetStatus         rpc.Cmd = 71
+	CmdStorageGetTrunkFileID    rpc.Cmd = 72
+	CmdStorageReportTrunkFileID rpc.Cmd = 73
+	CmdStorageReportTrunkFree   rpc.Cmd = 74
+	CmdStorageGetParams         rpc.Cmd = 75
+	CmdStorageReportStatus      rpc.Cmd = 76
+	CmdStorageGetChangeLog      rpc.Cmd = 77
+	CmdStorageUpdateIP          rpc.Cmd = 78
+	CmdStorageJoin              rpc.Cmd = 81
+	CmdStorageHeartbeat         rpc.Cmd = 83
+	CmdStorageReportDiskUsage   rpc.Cmd = 84
 
-	CmdGetGroup          proto.Cmd = 90
-	CmdListGroups        proto.Cmd = 91
-	CmdDeleteGroup       proto.Cmd = 108
-	CmdListGroupStorages proto.Cmd = 92
-	CmdGetStorage        proto.Cmd = 92
-	CmdDeleteStorage     proto.Cmd = 93
-	CmdSetTrunkServer    proto.Cmd = 94
+	CmdGetGroup          rpc.Cmd = 90
+	CmdListGroups        rpc.Cmd = 91
+	CmdDeleteGroup       rpc.Cmd = 108
+	CmdListGroupStorages rpc.Cmd = 92
+	CmdGetStorage        rpc.Cmd = 92
+	CmdDeleteStorage     rpc.Cmd = 93
+	CmdSetTrunkServer    rpc.Cmd = 94
 
 	// upload
-	CmdQueryStorage       proto.Cmd = 101
-	CmdQueryGroupStorage  proto.Cmd = 104 // group name
-	CmdQueryStorages      proto.Cmd = 106
-	CmdQueryGroupStorages proto.Cmd = 107 // group name
+	CmdQueryStorage       rpc.Cmd = 101
+	CmdQueryGroupStorage  rpc.Cmd = 104 // group name
+	CmdQueryStorages      rpc.Cmd = 106
+	CmdQueryGroupStorages rpc.Cmd = 107 // group name
 
 	// download
-	CmdQueryDownloadableStorage  proto.Cmd = 102 // group name, file name
-	CmdQueryDownloadableStorages proto.Cmd = 105 // group name, file name
+	CmdQueryDownloadableStorage  rpc.Cmd = 102 // group name, file name
+	CmdQueryDownloadableStorages rpc.Cmd = 105 // group name, file name
 
 	// update
-	CmdQueryUpdatableStorage proto.Cmd = 103 // group name, file name
+	CmdQueryUpdatableStorage rpc.Cmd = 103 // group name, file name
 )
 
 type Service interface {

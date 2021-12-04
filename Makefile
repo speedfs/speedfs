@@ -12,16 +12,19 @@ rpcgen:
 	go build -o ${RPCGEN} tools/rpcgen/*.go
 	${RPCGEN} -input proto/storage/storage.go -rpc 1
 	${RPCGEN} -input proto/tracker/tracker.go -rpc 1
-	${RPCGEN} -input proto/cmd.go
-	${RPCGEN} -input proto/header.go
+	${RPCGEN} -input rpc/ping.go
+	${RPCGEN} -input rpc/quit.go
+	${RPCGEN} -input rpc/reply.go
+	${RPCGEN} -input rpc/header.go
 
 build: pkg cmd
 
 pkg:
+	go build github.com/speedfs/speedfs/internal/storage
 	go build github.com/speedfs/speedfs/proto
 	go build github.com/speedfs/speedfs/proto/storage
 	go build github.com/speedfs/speedfs/proto/tracker
-	go build github.com/speedfs/speedfs/internal/storage
+	go build github.com/speedfs/speedfs/rpc
 
 cmd: cli
 

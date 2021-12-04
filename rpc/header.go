@@ -1,4 +1,4 @@
-package proto
+package rpc
 
 const (
 	HeaderLen = 10

@@ -3,16 +3,16 @@
 package storage
 
 import (
-	"github.com/speedfs/speedfs/proto"
+	"github.com/speedfs/speedfs/rpc"
 )
 
 // EncodeTo
-func (x *ReportStorageIDCommand) EncodeTo(enc *proto.Encoder) {
+func (x *ReportStorageIDCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.StorageID[:])
 }
 
 // DecodeFrom
-func (x *ReportStorageIDCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *ReportStorageIDCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -24,27 +24,27 @@ func (x *ReportStorageIDCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *ReportStorageIDCommand) Cmd() proto.Cmd {
+func (x *ReportStorageIDCommand) Cmd() rpc.Cmd {
 	return CmdReportStorageID
 }
 
 // EncodeTo
-func (x *ReportStorageIDReply) EncodeTo(enc *proto.Encoder) {
+func (x *ReportStorageIDReply) EncodeTo(enc *rpc.Encoder) {
 }
 
 // DecodeFrom
-func (x *ReportStorageIDReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *ReportStorageIDReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	return nil
 }
 
 // Cmd
-func (x *ReportStorageIDReply) Cmd() proto.Cmd {
+func (x *ReportStorageIDReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *UploadFileCommand) EncodeTo(enc *proto.Encoder) {
+func (x *UploadFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint8(x.StorePathIndex)
 	enc.EncodeUint64(x.MetadataLen)
 	enc.EncodeUint64(x.Size)
@@ -54,7 +54,7 @@ func (x *UploadFileCommand) EncodeTo(enc *proto.Encoder) {
 }
 
 // DecodeFrom
-func (x *UploadFileCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *UploadFileCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -83,18 +83,18 @@ func (x *UploadFileCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *UploadFileCommand) Cmd() proto.Cmd {
+func (x *UploadFileCommand) Cmd() rpc.Cmd {
 	return CmdUploadFile
 }
 
 // EncodeTo
-func (x *UploadFileReply) EncodeTo(enc *proto.Encoder) {
+func (x *UploadFileReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
-func (x *UploadFileReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *UploadFileReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -107,12 +107,12 @@ func (x *UploadFileReply) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *UploadFileReply) Cmd() proto.Cmd {
+func (x *UploadFileReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *UploadAppenderFileCommand) EncodeTo(enc *proto.Encoder) {
+func (x *UploadAppenderFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint8(x.StorePathIndex)
 	enc.EncodeUint64(x.MetadataLen)
 	enc.EncodeUint64(x.Size)
@@ -122,7 +122,7 @@ func (x *UploadAppenderFileCommand) EncodeTo(enc *proto.Encoder) {
 }
 
 // DecodeFrom
-func (x *UploadAppenderFileCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *UploadAppenderFileCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -151,18 +151,18 @@ func (x *UploadAppenderFileCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *UploadAppenderFileCommand) Cmd() proto.Cmd {
+func (x *UploadAppenderFileCommand) Cmd() rpc.Cmd {
 	return CmdUploadAppenderFile
 }
 
 // EncodeTo
-func (x *UploadAppenderFileReply) EncodeTo(enc *proto.Encoder) {
+func (x *UploadAppenderFileReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
-func (x *UploadAppenderFileReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *UploadAppenderFileReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -175,18 +175,18 @@ func (x *UploadAppenderFileReply) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *UploadAppenderFileReply) Cmd() proto.Cmd {
+func (x *UploadAppenderFileReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *DeleteFileCommand) EncodeTo(enc *proto.Encoder) {
+func (x *DeleteFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
-func (x *DeleteFileCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *DeleteFileCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -199,27 +199,27 @@ func (x *DeleteFileCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *DeleteFileCommand) Cmd() proto.Cmd {
+func (x *DeleteFileCommand) Cmd() rpc.Cmd {
 	return CmdDeleteFile
 }
 
 // EncodeTo
-func (x *DeleteFileReply) EncodeTo(enc *proto.Encoder) {
+func (x *DeleteFileReply) EncodeTo(enc *rpc.Encoder) {
 }
 
 // DecodeFrom
-func (x *DeleteFileReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *DeleteFileReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	return nil
 }
 
 // Cmd
-func (x *DeleteFileReply) Cmd() proto.Cmd {
+func (x *DeleteFileReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *SetMetadataCommand) EncodeTo(enc *proto.Encoder) {
+func (x *SetMetadataCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.MetadataLen)
 	enc.EncodeByte(x.Flag)
@@ -229,7 +229,7 @@ func (x *SetMetadataCommand) EncodeTo(enc *proto.Encoder) {
 }
 
 // DecodeFrom
-func (x *SetMetadataCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *SetMetadataCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -264,33 +264,33 @@ func (x *SetMetadataCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *SetMetadataCommand) Cmd() proto.Cmd {
+func (x *SetMetadataCommand) Cmd() rpc.Cmd {
 	return CmdSetMetadata
 }
 
 // EncodeTo
-func (x *SetMetadataReply) EncodeTo(enc *proto.Encoder) {
+func (x *SetMetadataReply) EncodeTo(enc *rpc.Encoder) {
 }
 
 // DecodeFrom
-func (x *SetMetadataReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *SetMetadataReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	return nil
 }
 
 // Cmd
-func (x *SetMetadataReply) Cmd() proto.Cmd {
+func (x *SetMetadataReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *GetMetadataCommand) EncodeTo(enc *proto.Encoder) {
+func (x *GetMetadataCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
-func (x *GetMetadataCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *GetMetadataCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -303,17 +303,17 @@ func (x *GetMetadataCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *GetMetadataCommand) Cmd() proto.Cmd {
+func (x *GetMetadataCommand) Cmd() rpc.Cmd {
 	return CmdGetMetadata
 }
 
 // EncodeTo
-func (x *GetMetadataReply) EncodeTo(enc *proto.Encoder) {
+func (x *GetMetadataReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Metadata)
 }
 
 // DecodeFrom
-func (x *GetMetadataReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *GetMetadataReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	x.Metadata = string(dec.Bytes())
 
@@ -321,12 +321,12 @@ func (x *GetMetadataReply) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *GetMetadataReply) Cmd() proto.Cmd {
+func (x *GetMetadataReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *DownloadFileCommand) EncodeTo(enc *proto.Encoder) {
+func (x *DownloadFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.Offset)
 	enc.EncodeUint64(x.Size)
 	enc.EncodeBytes(x.GroupName[:])
@@ -334,7 +334,7 @@ func (x *DownloadFileCommand) EncodeTo(enc *proto.Encoder) {
 }
 
 // DecodeFrom
-func (x *DownloadFileCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *DownloadFileCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -353,17 +353,17 @@ func (x *DownloadFileCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *DownloadFileCommand) Cmd() proto.Cmd {
+func (x *DownloadFileCommand) Cmd() rpc.Cmd {
 	return CmdDownloadFile
 }
 
 // EncodeTo
-func (x *DownloadFileReply) EncodeTo(enc *proto.Encoder) {
+func (x *DownloadFileReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.Content[:])
 }
 
 // DecodeFrom
-func (x *DownloadFileReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *DownloadFileReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	x.Content = dec.Bytes()
 
@@ -371,18 +371,18 @@ func (x *DownloadFileReply) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *DownloadFileReply) Cmd() proto.Cmd {
+func (x *DownloadFileReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *GetFileInfoCommand) EncodeTo(enc *proto.Encoder) {
+func (x *GetFileInfoCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
-func (x *GetFileInfoCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *GetFileInfoCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -395,12 +395,12 @@ func (x *GetFileInfoCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *GetFileInfoCommand) Cmd() proto.Cmd {
+func (x *GetFileInfoCommand) Cmd() rpc.Cmd {
 	return CmdGetFileInfo
 }
 
 // EncodeTo
-func (x *GetFileInfoReply) EncodeTo(enc *proto.Encoder) {
+func (x *GetFileInfoReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.Size)
 	enc.EncodeUint64(x.CreateTime)
 	enc.EncodeUint64(x.CRC32)
@@ -408,7 +408,7 @@ func (x *GetFileInfoReply) EncodeTo(enc *proto.Encoder) {
 }
 
 // DecodeFrom
-func (x *GetFileInfoReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *GetFileInfoReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -429,12 +429,12 @@ func (x *GetFileInfoReply) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *GetFileInfoReply) Cmd() proto.Cmd {
+func (x *GetFileInfoReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *AppendFileCommand) EncodeTo(enc *proto.Encoder) {
+func (x *AppendFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Size)
 	enc.EncodeString(x.Filename)
@@ -442,7 +442,7 @@ func (x *AppendFileCommand) EncodeTo(enc *proto.Encoder) {
 }
 
 // DecodeFrom
-func (x *AppendFileCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *AppendFileCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -468,27 +468,27 @@ func (x *AppendFileCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *AppendFileCommand) Cmd() proto.Cmd {
+func (x *AppendFileCommand) Cmd() rpc.Cmd {
 	return CmdAppendFile
 }
 
 // EncodeTo
-func (x *AppendFileReply) EncodeTo(enc *proto.Encoder) {
+func (x *AppendFileReply) EncodeTo(enc *rpc.Encoder) {
 }
 
 // DecodeFrom
-func (x *AppendFileReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *AppendFileReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	return nil
 }
 
 // Cmd
-func (x *AppendFileReply) Cmd() proto.Cmd {
+func (x *AppendFileReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *ModifyFileCommand) EncodeTo(enc *proto.Encoder) {
+func (x *ModifyFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Offset)
 	enc.EncodeUint64(x.Size)
@@ -497,7 +497,7 @@ func (x *ModifyFileCommand) EncodeTo(enc *proto.Encoder) {
 }
 
 // DecodeFrom
-func (x *ModifyFileCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *ModifyFileCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -526,34 +526,34 @@ func (x *ModifyFileCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *ModifyFileCommand) Cmd() proto.Cmd {
+func (x *ModifyFileCommand) Cmd() rpc.Cmd {
 	return CmdModifyFile
 }
 
 // EncodeTo
-func (x *ModifyFileReply) EncodeTo(enc *proto.Encoder) {
+func (x *ModifyFileReply) EncodeTo(enc *rpc.Encoder) {
 }
 
 // DecodeFrom
-func (x *ModifyFileReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *ModifyFileReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	return nil
 }
 
 // Cmd
-func (x *ModifyFileReply) Cmd() proto.Cmd {
+func (x *ModifyFileReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *TruncateFileCommand) EncodeTo(enc *proto.Encoder) {
+func (x *TruncateFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeUint64(x.FilenameLen)
 	enc.EncodeUint64(x.Size)
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
-func (x *TruncateFileCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *TruncateFileCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -575,32 +575,32 @@ func (x *TruncateFileCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *TruncateFileCommand) Cmd() proto.Cmd {
+func (x *TruncateFileCommand) Cmd() rpc.Cmd {
 	return CmdTruncateFile
 }
 
 // EncodeTo
-func (x *TruncateFileReply) EncodeTo(enc *proto.Encoder) {
+func (x *TruncateFileReply) EncodeTo(enc *rpc.Encoder) {
 }
 
 // DecodeFrom
-func (x *TruncateFileReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *TruncateFileReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	return nil
 }
 
 // Cmd
-func (x *TruncateFileReply) Cmd() proto.Cmd {
+func (x *TruncateFileReply) Cmd() rpc.Cmd {
 	return CmdReply
 }
 
 // EncodeTo
-func (x *RenameFileCommand) EncodeTo(enc *proto.Encoder) {
+func (x *RenameFileCommand) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
-func (x *RenameFileCommand) DecodeFrom(dec *proto.Decoder) error {
+func (x *RenameFileCommand) DecodeFrom(dec *rpc.Decoder) error {
 
 	x.Filename = string(dec.Bytes())
 
@@ -608,18 +608,18 @@ func (x *RenameFileCommand) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *RenameFileCommand) Cmd() proto.Cmd {
+func (x *RenameFileCommand) Cmd() rpc.Cmd {
 	return CmdRenameFile
 }
 
 // EncodeTo
-func (x *RenameFileReply) EncodeTo(enc *proto.Encoder) {
+func (x *RenameFileReply) EncodeTo(enc *rpc.Encoder) {
 	enc.EncodeBytes(x.GroupName[:])
 	enc.EncodeString(x.Filename)
 }
 
 // DecodeFrom
-func (x *RenameFileReply) DecodeFrom(dec *proto.Decoder) error {
+func (x *RenameFileReply) DecodeFrom(dec *rpc.Decoder) error {
 
 	var err error
 
@@ -632,6 +632,6 @@ func (x *RenameFileReply) DecodeFrom(dec *proto.Decoder) error {
 }
 
 // Cmd
-func (x *RenameFileReply) Cmd() proto.Cmd {
+func (x *RenameFileReply) Cmd() rpc.Cmd {
 	return CmdReply
 }

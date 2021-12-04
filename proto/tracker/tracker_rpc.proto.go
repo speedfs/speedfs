@@ -7,17 +7,17 @@ import (
 	"net"
 	"syscall"
 
-	"github.com/speedfs/speedfs/proto"
+	"github.com/speedfs/speedfs/rpc"
 )
 
-type method func(ctx context.Context, buf []byte) (proto.Message, error)
+type method func(ctx context.Context, buf []byte) (rpc.Message, error)
 
 type handler struct {
 	service *service
 	methods [256]method
 }
 
-func NewHandler(service Service) proto.Handler {
+func NewHandler(service Service) rpc.Handler {
 	h := &handler{
 		service: newService(service),
 	}
@@ -25,7 +25,7 @@ func NewHandler(service Service) proto.Handler {
 	return h
 }
 
-func (h *handler) Handle(ctx context.Context, cmd uint8, buf []byte) (proto.Message, error) {
+func (h *handler) Handle(ctx context.Context, cmd uint8, buf []byte) (rpc.Message, error) {
 	method := h.methods[cmd]
 	if method == nil {
 		return nil, syscall.EINVAL
@@ -47,9 +47,9 @@ func newService(s Service) *service {
 	}
 }
 
-func (s *service) QueryStorage(ctx context.Context, buf []byte) (proto.Message, error) {
+func (s *service) QueryStorage(ctx context.Context, buf []byte) (rpc.Message, error) {
 	cmd := new(QueryStorageCommand)
-	dec := proto.NewDecoder(buf)
+	dec := rpc.NewDecoder(buf)
 
 	if err := cmd.DecodeFrom(dec); err != nil {
 		return nil, err
@@ -59,12 +59,12 @@ func (s *service) QueryStorage(ctx context.Context, buf []byte) (proto.Message, 
 }
 
 type Client struct {
-	c *proto.Conn
+	c *rpc.Conn
 }
 
 func NewClient(conn net.Conn) *Client {
 	return &Client{
-		c: proto.NewConn(conn),
+		c: rpc.NewConn(conn),
 	}
 }
 

@@ -1,4 +1,4 @@
-package proto
+package rpc
 
 type Message interface {
 	EncoderTo

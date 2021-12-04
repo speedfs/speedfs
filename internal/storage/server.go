@@ -5,16 +5,16 @@ import (
 	"log"
 	"net"
 
-	"github.com/speedfs/speedfs/proto"
+	"github.com/speedfs/speedfs/rpc"
 )
 
 type Server struct {
 	addr    string
-	handler proto.Handler
+	handler rpc.Handler
 }
 
 // NewServer return a new Server
-func NewServer(addr string, handler proto.Handler) *Server {
+func NewServer(addr string, handler rpc.Handler) *Server {
 	return &Server{
 		addr:    addr,
 		handler: handler,
@@ -29,7 +29,7 @@ func (srv *Server) serve(l net.Listener) error {
 			return err
 		}
 
-		go srv.handle(proto.NewConn(conn))
+		go srv.handle(rpc.NewConn(conn))
 	}
 }
 
@@ -41,7 +41,7 @@ func (srv *Server) ListenAndServe() error {
 	return srv.serve(l)
 }
 
-func (srv *Server) handle(conn *proto.Conn) error {
+func (srv *Server) handle(conn *rpc.Conn) error {
 	for {
 		ctx := context.Background()
 		header, buf, err := conn.Read(ctx)

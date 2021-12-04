@@ -7,17 +7,17 @@ import (
 	"net"
 	"syscall"
 
-	"github.com/speedfs/speedfs/proto"
+	"github.com/speedfs/speedfs/rpc"
 )
 
-type method func(ctx context.Context, buf []byte) (proto.Message, error)
+type method func(ctx context.Context, buf []byte) (rpc.Message, error)
 
 type handler struct {
 	service *service
 	methods [256]method
 }
 
-func NewHandler(service Service) proto.Handler {
+func NewHandler(service Service) rpc.Handler {
 	h := &handler{
 		service: newService(service),
 	}
@@ -25,7 +25,7 @@ func NewHandler(service Service) proto.Handler {
 	return h
 }
 
-func (h *handler) Handle(ctx context.Context, cmd uint8, buf []byte) (proto.Message, error) {
+func (h *handler) Handle(ctx context.Context, cmd uint8, buf []byte) (rpc.Message, error) {
 	method := h.methods[cmd]
 	if method == nil {
 		return nil, syscall.EINVAL
@@ -55,9 +55,9 @@ func newService(s Service) *service {
 	}
 }
 
-func (s *service) UploadFile(ctx context.Context, buf []byte) (proto.Message, error) {
+func (s *service) UploadFile(ctx context.Context, buf []byte) (rpc.Message, error) {
 	cmd := new(UploadFileCommand)
-	dec := proto.NewDecoder(buf)
+	dec := rpc.NewDecoder(buf)
 
 	if err := cmd.DecodeFrom(dec); err != nil {
 		return nil, err
@@ -66,9 +66,9 @@ func (s *service) UploadFile(ctx context.Context, buf []byte) (proto.Message, er
 	return s.s.UploadFile(ctx, cmd)
 }
 
-func (s *service) UploadAppenderFile(ctx context.Context, buf []byte) (proto.Message, error) {
+func (s *service) UploadAppenderFile(ctx context.Context, buf []byte) (rpc.Message, error) {
 	cmd := new(UploadAppenderFileCommand)
-	dec := proto.NewDecoder(buf)
+	dec := rpc.NewDecoder(buf)
 
 	if err := cmd.DecodeFrom(dec); err != nil {
 		return nil, err
@@ -77,9 +77,9 @@ func (s *service) UploadAppenderFile(ctx context.Context, buf []byte) (proto.Mes
 	return s.s.UploadAppenderFile(ctx, cmd)
 }
 
-func (s *service) SetMetadata(ctx context.Context, buf []byte) (proto.Message, error) {
+func (s *service) SetMetadata(ctx context.Context, buf []byte) (rpc.Message, error) {
 	cmd := new(SetMetadataCommand)
-	dec := proto.NewDecoder(buf)
+	dec := rpc.NewDecoder(buf)
 
 	if err := cmd.DecodeFrom(dec); err != nil {
 		return nil, err
@@ -88,9 +88,9 @@ func (s *service) SetMetadata(ctx context.Context, buf []byte) (proto.Message, e
 	return s.s.SetMetadata(ctx, cmd)
 }
 
-func (s *service) GetMetadata(ctx context.Context, buf []byte) (proto.Message, error) {
+func (s *service) GetMetadata(ctx context.Context, buf []byte) (rpc.Message, error) {
 	cmd := new(GetMetadataCommand)
-	dec := proto.NewDecoder(buf)
+	dec := rpc.NewDecoder(buf)
 
 	if err := cmd.DecodeFrom(dec); err != nil {
 		return nil, err
@@ -99,9 +99,9 @@ func (s *service) GetMetadata(ctx context.Context, buf []byte) (proto.Message, e
 	return s.s.GetMetadata(ctx, cmd)
 }
 
-func (s *service) DownloadFile(ctx context.Context, buf []byte) (proto.Message, error) {
+func (s *service) DownloadFile(ctx context.Context, buf []byte) (rpc.Message, error) {
 	cmd := new(DownloadFileCommand)
-	dec := proto.NewDecoder(buf)
+	dec := rpc.NewDecoder(buf)
 
 	if err := cmd.DecodeFrom(dec); err != nil {
 		return nil, err
@@ -110,9 +110,9 @@ func (s *service) DownloadFile(ctx context.Context, buf []byte) (proto.Message, 
 	return s.s.DownloadFile(ctx, cmd)
 }
 
-func (s *service) AppendFile(ctx context.Context, buf []byte) (proto.Message, error) {
+func (s *service) AppendFile(ctx context.Context, buf []byte) (rpc.Message, error) {
 	cmd := new(AppendFileCommand)
-	dec := proto.NewDecoder(buf)
+	dec := rpc.NewDecoder(buf)
 
 	if err := cmd.DecodeFrom(dec); err != nil {
 		return nil, err
@@ -121,9 +121,9 @@ func (s *service) AppendFile(ctx context.Context, buf []byte) (proto.Message, er
 	return s.s.AppendFile(ctx, cmd)
 }
 
-func (s *service) ModifyFile(ctx context.Context, buf []byte) (proto.Message, error) {
+func (s *service) ModifyFile(ctx context.Context, buf []byte) (rpc.Message, error) {
 	cmd := new(ModifyFileCommand)
-	dec := proto.NewDecoder(buf)
+	dec := rpc.NewDecoder(buf)
 
 	if err := cmd.DecodeFrom(dec); err != nil {
 		return nil, err
@@ -132,9 +132,9 @@ func (s *service) ModifyFile(ctx context.Context, buf []byte) (proto.Message, er
 	return s.s.ModifyFile(ctx, cmd)
 }
 
-func (s *service) TruncateFile(ctx context.Context, buf []byte) (proto.Message, error) {
+func (s *service) TruncateFile(ctx context.Context, buf []byte) (rpc.Message, error) {
 	cmd := new(TruncateFileCommand)
-	dec := proto.NewDecoder(buf)
+	dec := rpc.NewDecoder(buf)
 
 	if err := cmd.DecodeFrom(dec); err != nil {
 		return nil, err
@@ -143,9 +143,9 @@ func (s *service) TruncateFile(ctx context.Context, buf []byte) (proto.Message, 
 	return s.s.TruncateFile(ctx, cmd)
 }
 
-func (s *service) RenameFile(ctx context.Context, buf []byte) (proto.Message, error) {
+func (s *service) RenameFile(ctx context.Context, buf []byte) (rpc.Message, error) {
 	cmd := new(RenameFileCommand)
-	dec := proto.NewDecoder(buf)
+	dec := rpc.NewDecoder(buf)
 
 	if err := cmd.DecodeFrom(dec); err != nil {
 		return nil, err
@@ -155,12 +155,12 @@ func (s *service) RenameFile(ctx context.Context, buf []byte) (proto.Message, er
 }
 
 type Client struct {
-	c *proto.Conn
+	c *rpc.Conn
 }
 
 func NewClient(conn net.Conn) *Client {
 	return &Client{
-		c: proto.NewConn(conn),
+		c: rpc.NewConn(conn),
 	}
 }
 
