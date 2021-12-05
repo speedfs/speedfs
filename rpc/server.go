@@ -19,7 +19,7 @@ func NewServer(addr string, handler Handler) *Server {
 	}
 }
 
-func (srv *Server) serve(l net.Listener) error {
+func (s *Server) serve(l net.Listener) error {
 	for {
 		conn, err := l.Accept()
 		if err != nil {
@@ -27,19 +27,19 @@ func (srv *Server) serve(l net.Listener) error {
 			return err
 		}
 
-		go srv.handle(NewConn(conn))
+		go s.handle(NewConn(conn))
 	}
 }
 
-func (srv *Server) ListenAndServe() error {
-	l, err := net.Listen("tcp", srv.addr)
+func (s *Server) ListenAndServe() error {
+	l, err := net.Listen("tcp", s.addr)
 	if err != nil {
 		return err
 	}
-	return srv.serve(l)
+	return s.serve(l)
 }
 
-func (srv *Server) handle(conn *Conn) error {
+func (s *Server) handle(conn *Conn) error {
 	for {
 		ctx := context.Background()
 		header, buf, err := conn.Read(ctx)
@@ -47,7 +47,7 @@ func (srv *Server) handle(conn *Conn) error {
 			return err
 		}
 
-		reply, err := srv.handler.Handle(ctx, uint8(header.Cmd), buf)
+		reply, err := s.handler.Handle(ctx, header.Cmd, buf)
 		if err != nil {
 			return err
 		}

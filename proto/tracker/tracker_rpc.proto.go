@@ -4,7 +4,6 @@ package tracker
 
 import (
 	"context"
-	"net"
 	"syscall"
 
 	"github.com/speedfs/speedfs/rpc"
@@ -59,12 +58,12 @@ func (s *service) QueryStorage(ctx context.Context, buf []byte) (rpc.Message, er
 }
 
 type Client struct {
-	c *rpc.Conn
+	c *rpc.Client
 }
 
-func NewClient(conn net.Conn) *Client {
+func NewClient(addr string) *Client {
 	return &Client{
-		c: rpc.NewConn(conn),
+		c: rpc.NewClient(addr),
 	}
 }
 

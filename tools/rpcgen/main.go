@@ -312,12 +312,12 @@ func (s *service) %s(ctx context.Context, buf []byte) (rpc.Message, error) {
 
 const clientTpl = `
 type Client struct {
-	c *rpc.Conn
+	c *rpc.Client
 }
 
-func NewClient(conn net.Conn) *Client {
+func NewClient(addr string) *Client {
 	return &Client{
-		c: rpc.NewConn(conn),
+		c: rpc.NewClient(addr),
 	}
 }
 
@@ -344,7 +344,6 @@ func generateRPCProtoFile(fset *token.FileSet, f *ast.File, output string) {
 		b.WriteString(`
 import (
 	"context"
-	"net"
 	"syscall"
 
 	"github.com/speedfs/speedfs/rpc"
